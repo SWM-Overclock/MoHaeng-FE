@@ -91,6 +91,13 @@ class MainActivity : AppCompatActivity() {
                 TextMsg(this, "카카오계정으로 로그인 실패 : ${error}")
                 setLogin(false)
             } else if (token != null) {
+
+                UserApiClient.instance.me { user, error ->
+                    TextMsg(this, "카카오계정으로 로그인 성공 \n\n " +
+                            "token: ${token.accessToken} \n\n " +
+                            "me: ${user}")
+                    setLogin(true)
+                }
                 // Access Token을 서버로 보내는 메소드 호출
                 sendAccessTokenToServer(token.accessToken)
             }
