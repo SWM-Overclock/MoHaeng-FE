@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.moHaeng.databinding.ActivityMainBinding
+import com.google.gson.annotations.SerializedName
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.ClientError
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     // 통신할 ApiClient를 정의하는 객체
     object ApiClient {
-        private const val BASE_URL = "https://your.server.url/"
+        private const val BASE_URL = "https://a24b-221-148-248-129.ngrok-free.app/login/oauth2/"
 
         private val retrofit: Retrofit by lazy {
             Retrofit.Builder()
@@ -44,19 +45,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     data class LoginResponse(
-        val jwtToken: String
+        val id: Int,
+        val nickName: String,
+        val email: String,
+        val imageUrl: String
     )
 
     data class AccessTokenRequest(
-        val access_token: String
+        @SerializedName("accessToken")
+        val accessToken: String
     )
 
 
     interface ApiService {
 
         // 기존에 정의한 메소드들과 함께, 서버로 Access Token을 보내는 메소드를 추가
-        @POST("login") // 해당 엔드포인트는 실제 서버에 맞게 변경해야 합니다.
-        fun sendAccessTokenToServer(@Body accessTokenRequest: AccessTokenRequest): Call<LoginResponse>
+        @POST("kakao")
+        fun sendAccessTokenToServer(@Body accessToken: AccessTokenRequest): Call<LoginResponse>
     }
 
 
@@ -120,9 +125,9 @@ class MainActivity : AppCompatActivity() {
                 } else if (token != null) {
                     TextMsg(this, "카카오톡으로 로그인 성공 ${token.accessToken}")
                     Log.e(ContentValues.TAG, "엑세스 토큰: ${token.accessToken}")
-                    Log.e(ContentValues.TAG, "엑세스 토큰: ${KakaoSdk.redirectUri}")
 
                     // Access Token을 서버로 보내는 메소드 호출
+
                     sendAccessTokenToServer(token.accessToken)
                 }
             }
@@ -175,15 +180,18 @@ class MainActivity : AppCompatActivity() {
         // Access Token을 서버로 보내기 위한 데이터 클래스 인스턴스 생성
         val request = AccessTokenRequest(accessToken)
 
+        Log.e(ContentValues.TAG, "access token = ${request.toString()}")
+
         // Access Token을 서버로 보내는 요청
         apiService.sendAccessTokenToServer(request).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
-                    // 서버로부터 응답을 받아 처리하는 로직
+                    Log.e(ContentValues.TAG, "서버 response 반환 성공")
                     val loginResponse = response.body()
+                    Log.e(ContentValues.TAG, "반환값 = ${response.body().toString()}")
                     // 예시) 로그인 성공 여부 등을 확인하고 처리
                 } else {
-                    // 서버 요청은 성공했지만 서버에서 오류 응답을 준 경우 처리
+                    Log.e(ContentValues.TAG, "서버 response 반환 실패")
                 }
             }
 
