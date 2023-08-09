@@ -3,22 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.moHaeng">
 
-
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
-        android:installLocation="preferExternal"
-        android:name="com.example.moHaeng.GlobalApplication"
+        android:name=".GlobalApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
+        android:installLocation="preferExternal"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -26,20 +27,21 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
-<!--구글 맵 관련 데이터-->
-<!--        <meta-data- -->
-<!--            android:name="com.google.android.geo.API_KEY"-->
-<!--            android:value="AIzaSyAdnmn9hOejyTT3TjLRJS_InDZi0Oeuj0U" />-->
-
+        <activity
+            android:name=".realMainActivity"
+            android:exported="false" /> <!-- 구글 맵 관련 데이터 -->
+        <!-- <meta-data- -->
+        <!-- android:name="com.google.android.geo.API_KEY" -->
+        <!-- android:value="AIzaSyAdnmn9hOejyTT3TjLRJS_InDZi0Oeuj0U" /> -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
 
         <activity
-            android:name="com.example.moHaeng.LocationPermissionActivity"
+            android:name=".LocationPermissionActivity"
             android:exported="true" />
         <activity
-            android:name="com.example.moHaeng.SplashActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,10 +50,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.moHaeng.DetailActivity"
+            android:name=".DetailActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.moHaeng.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -65,8 +67,6 @@
                     android:scheme="@string/kakao_app_key2" />
             </intent-filter>
         </activity>
-
-
     </application>
 
 </manifest>
