@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:title="홈"
+        android:enabled="true"
+        android:icon="@drawable/navi_home"/>
+
+    <item
+        android:id="@+id/MapFragment"
+        android:title="지도"
+        android:enabled="true"
+        android:icon="@drawable/navi_map"/>
+
+    <item
+        android:id="@+id/AddFragment"
+        android:title="행사등록"
+        android:enabled="true"
+        android:icon="@drawable/navi_add"/>
+
+    <item
+        android:id="@+id/myPageFragment"
+        android:title="마이페이지"
+        android:enabled="true"
+        android:icon="@drawable/navi_mypage"/>
+
+</menu>
