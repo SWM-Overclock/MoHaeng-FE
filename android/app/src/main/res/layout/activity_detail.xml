@@ -125,7 +125,7 @@
                         android:text="2+1"
                         android:textColor="@color/PinkRed"
                         android:textSize="24dp"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/pretendard_bold" />
 
                     <TextView
                         android:id="@+id/perPiece"
@@ -142,7 +142,7 @@
                         android:text="1,400"
                         android:textColor="@color/black"
                         android:textSize="24dp"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/pretendard_bold"/>
 
                     <TextView
                         android:id="@+id/won"
@@ -213,7 +213,7 @@
                             android:text="197m, 도보 3분"
                             android:textColor="@color/map"
                             android:textSize="14dp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/pretendard_bold" />
 
                         <TextView
                             android:id="@+id/MapSubTitle3"
@@ -270,7 +270,7 @@
                     android:text="이런 상품은 어때요?"
                     android:textColor="@color/black"
                     android:textSize="18dp"
-                    android:textStyle="bold" />
+                    android:fontFamily="@font/pretendard_bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/RecommendRecyclerView"
