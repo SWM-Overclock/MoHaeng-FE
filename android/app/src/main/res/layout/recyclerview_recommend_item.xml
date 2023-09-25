@@ -7,15 +7,21 @@
     android:layout_height="wrap_content"
     android:padding="4dp">
 
-    <FrameLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/itemFrame"
         android:layout_width="156dp"
         android:layout_height="156dp"
-        android:background="@drawable/radius_background"
-        android:src="@drawable/ic_launcher_background"
+        app:cardCornerRadius="12dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         >
+        <ImageView
+            android:id="@+id/itemImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_launcher_background">
+
+        </ImageView>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -47,7 +53,7 @@
 
         </ImageButton>
 
-    </FrameLayout>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/shopName"
