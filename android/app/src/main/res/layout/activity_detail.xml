@@ -29,14 +29,17 @@
             android:visibility="visible" />
     </LinearLayout>
 
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toTopOf="@id/navigationView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -122,10 +125,10 @@
                         android:id="@+id/eventTag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_bold"
                         android:text="2+1"
                         android:textColor="@color/PinkRed"
-                        android:textSize="24dp"
-                        android:fontFamily="@font/pretendard_bold" />
+                        android:textSize="24dp" />
 
                     <TextView
                         android:id="@+id/perPiece"
@@ -139,10 +142,10 @@
                         android:id="@+id/eventPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_bold"
                         android:text="1,400"
                         android:textColor="@color/black"
-                        android:textSize="24dp"
-                        android:fontFamily="@font/pretendard_bold"/>
+                        android:textSize="24dp" />
 
                     <TextView
                         android:id="@+id/won"
@@ -210,10 +213,10 @@
                             android:id="@+id/MapSubTitle2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/pretendard_bold"
                             android:text="197m, 도보 3분"
                             android:textColor="@color/map"
-                            android:textSize="14dp"
-                            android:fontFamily="@font/pretendard_bold" />
+                            android:textSize="14dp" />
 
                         <TextView
                             android:id="@+id/MapSubTitle3"
@@ -267,13 +270,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="12dp"
+                    android:fontFamily="@font/pretendard_bold"
                     android:text="이런 상품은 어때요?"
                     android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:fontFamily="@font/pretendard_bold" />
+                    android:textSize="18dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/RecommendRecyclerView"
+                    android:id="@+id/recommendRecyclerView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
@@ -287,9 +290,6 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
-
-
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationView"
