@@ -21,12 +21,18 @@ class HomeActivity : AppCompatActivity() {
 
 
         // RecyclerView 초기화
-        val recyclerView: RecyclerView = binding.categoryRecyclerView
-
+        val recyclerViewList: RecyclerView = binding.categoryRecyclerView
+        val recyclerViewButton: RecyclerView = binding.categoryRecyclerView
+        val recyclerViewRanking: RecyclerView = binding.rankingRecyclerView
 
 
         val layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
-        recyclerView.layoutManager = layoutManager
+        val layoutManager2 = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManager3 = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        recyclerViewList.layoutManager = layoutManager
+        recyclerViewButton.layoutManager = layoutManager2
+        recyclerViewRanking.layoutManager = layoutManager3
 
 
         val categoryList = listOf(
@@ -42,18 +48,34 @@ class HomeActivity : AppCompatActivity() {
             CategoryItem("카테고리0", R.drawable.ic_launcher_background)
         )
 
-        val adapter = CategoryAdapter(categoryList)
-        recyclerView.adapter = adapter
+        val itemList = listOf(
+            ProductItem("상점1", "상품1", "10%", "5,000", "4,500", true, "1"),
+            ProductItem("상점2", "상품2", "5%", "10,000", "9,500", true, "2"),
+            ProductItem("상점3", "상품3", "0%", "7,000", "7,000", false, "3")
+        )
 
-        recyclerView?.run {
+
+
+        val categoryAdapter = CategoryAdapter(categoryList)
+        val rankingAdapter = RankingAdapter(itemList)
+        recyclerViewList.adapter = categoryAdapter
+        recyclerViewButton.adapter = categoryAdapter
+        recyclerViewRanking.adapter = rankingAdapter
+
+        recyclerViewList?.run {
             val spanCount = categoryList.size / 2
             val space = (Resources.getSystem().displayMetrics.density).toInt()
-            addItemDecoration(GridSpaceItemDecoration(spanCount, space))
+            addItemDecoration(GridSpaceItemDecorationList(spanCount, space))
+        }
+
+        recyclerViewRanking?.run {
+            val space = (Resources.getSystem().displayMetrics.density).toInt()
+            addItemDecoration(GridSpaceItemDecorationRanking(space))
         }
     }
 }
 // GridLayoutManager의 간격 조절
-class GridSpaceItemDecoration(private val spanCount: Int, private val space: Int) :
+class GridSpaceItemDecorationList(private val spanCount: Int, private val space: Int) :
     RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(
@@ -72,6 +94,25 @@ class GridSpaceItemDecoration(private val spanCount: Int, private val space: Int
         // 첫번째 열을 제외하고 좌측 여백 추가
         if (position >= 2) {
             outRect.left = space * 8
+        }
+    }
+}
+
+// 랭킹 recyclerview 간격 조절
+class GridSpaceItemDecorationRanking(private val space: Int) :
+    RecyclerView.ItemDecoration() {
+
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        val position = parent.getChildAdapterPosition(view)     // item positionw
+
+        // 첫 행 제외하고 상단 여백 추가
+        if (position >= 1) {
+            outRect.top = space * 24
         }
     }
 }

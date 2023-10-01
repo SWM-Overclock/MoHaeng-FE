@@ -20,5 +20,6 @@
             android:text="편의점"
             android:textColor="@color/Gray4"
             android:textSize="14dp" />
+
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,15 +1,16 @@
+package com.example.moHaeng
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.moHaeng.ProductItem
+import com.example.moHaeng.databinding.RecyclerviewProductRankingBinding
 import com.example.moHaeng.databinding.RecyclerviewRecommendItemBinding
 
-
-class RecommendAdapter(private val itemList: List<ProductItem>) : RecyclerView.Adapter<RecommendAdapter.ViewHolder>() {
+class RankingAdapter (private val itemList: List<ProductItem>) : RecyclerView.Adapter<RankingAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = RecyclerviewRecommendItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = RecyclerviewProductRankingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -22,7 +23,7 @@ class RecommendAdapter(private val itemList: List<ProductItem>) : RecyclerView.A
         return itemList.size
     }
 
-    inner class ViewHolder(private val binding: RecyclerviewRecommendItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: RecyclerviewProductRankingBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ProductItem) {
             binding.apply {
                 shopName.text = item.shopName
@@ -30,12 +31,7 @@ class RecommendAdapter(private val itemList: List<ProductItem>) : RecyclerView.A
                 priceRate.text = item.priceRate
                 productPrice.text = item.productPrice
                 realPrice.text = item.realPrice
-
-                if (item.isDiscounted) {
-                    discountTag.visibility = View.VISIBLE
-                } else {
-                    discountTag.visibility = View.GONE
-                }
+                rankingTag.text = item.rankingTag
             }
         }
     }

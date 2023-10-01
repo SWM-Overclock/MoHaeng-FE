@@ -27,9 +27,9 @@ class DetailActivity : AppCompatActivity() {
 
         // RecyclerView에 표시할 데이터 아이템 리스트 생성 (예시 데이터)
         val itemList = listOf(
-            RecommendItem("상점1", "상품1", "10%", "5,000", "4,500", true),
-            RecommendItem("상점2", "상품2", "5%", "10,000", "9,500", true),
-            RecommendItem("상점3", "상품3", "0%", "7,000", "7,000", false)
+            ProductItem("상점1", "상품1", "10%", "5,000", "4,500", true, "1"),
+            ProductItem("상점2", "상품2", "5%", "10,000", "9,500", true, "2"),
+            ProductItem("상점3", "상품3", "0%", "7,000", "7,000", false, "3")
         )
 
         // RecommendAdapter를 생성하고 RecyclerView에 연결
