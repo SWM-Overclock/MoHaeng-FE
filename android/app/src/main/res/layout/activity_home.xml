@@ -141,17 +141,14 @@
                     </RelativeLayout>
 
                 </RelativeLayout>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/categoryButtonRecyclerView"
+                <FrameLayout
+                    android:id="@+id/categoryButtonContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginRight="16dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/recyclerview_category_button">
-                </androidx.recyclerview.widget.RecyclerView>
+                    >
+                </FrameLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rankingRecyclerView"

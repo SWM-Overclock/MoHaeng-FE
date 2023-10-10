@@ -24,15 +24,16 @@
             android:background="@color/white"
             android:scaleType="fitCenter"
             android:src="@drawable/back_button"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:contentDescription="@string/back_button"/>
 
         <TextView
             android:id="@+id/pageTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="24dp"
-            android:text="내 주변 행사 상품"
-            android:textSize="16dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/around_product"
+            android:textSize="16sp"
             android:gravity="center">
 
         </TextView>
@@ -41,6 +42,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/navigationView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
@@ -48,7 +50,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             >
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/categoryButtonRecyclerView"
@@ -76,14 +78,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:text="인기순">
+                    android:textSize="14sp"
+                    android:text="@string/sort_type">
+
                 </TextView>
 
                 <ImageButton
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/down_button">
+                    android:src="@drawable/down_button"
+                    android:contentDescription="@string/sort_toggle">
 
                 </ImageButton>
 
@@ -96,5 +100,19 @@
 
 
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@drawable/menu_click_color"
+        app:itemTextColor="@drawable/menu_click_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bot_navi_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
