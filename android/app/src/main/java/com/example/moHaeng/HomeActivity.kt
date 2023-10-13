@@ -23,7 +23,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(view)
 
         setupCategoryRecyclerView()
-        setupCategoryButtonRecyclerView()
+        setupCategoryButtonFragment()
         setupRankingRecyclerView()
     }
 
@@ -38,15 +38,12 @@ class HomeActivity : AppCompatActivity() {
         recyclerViewList.addItemDecoration(GridSpaceItemDecorationList(2, space))
     }
 
-    private fun setupCategoryButtonRecyclerView() {
-        val recyclerViewButton: RecyclerView = binding.categoryButtonRecyclerView
-        recyclerViewButton.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+    private fun setupCategoryButtonFragment() {
+        val categoryButtonFragment = CategoryButtonFragment()
 
-        val categoryButtonAdapter = CategoryButtonAdapter(itemList)
-        recyclerViewButton.adapter = categoryButtonAdapter
-
-        val space = (Resources.getSystem().displayMetrics.density).toInt()
-        recyclerViewButton.addItemDecoration(GridSpaceItemDecorationButton(space))
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.categoryButtonContainer, categoryButtonFragment)
+            .commit()
     }
 
     private fun setupRankingRecyclerView() {
@@ -110,23 +107,7 @@ class GridSpaceItemDecorationList(private val spanCount: Int, private val space:
     }
 }
 
-class GridSpaceItemDecorationButton(private val space: Int) :
-    RecyclerView.ItemDecoration() {
 
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        val position = parent.getChildAdapterPosition(view)     // item position
-
-        // 첫번째 열을 제외하고 좌측 여백 추가
-        if (position >= 1) {
-            outRect.left = space * 8
-        }
-    }
-}
 
 // 랭킹 recyclerview 간격 조절
 class GridSpaceItemDecorationRanking(private val space: Int) :
