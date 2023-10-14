@@ -27,12 +27,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ProductRankingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProductListActivity"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
-
         <activity
             android:name=".realMainActivity"
             android:exported="false" />
