@@ -58,9 +58,17 @@ class GridSpaceProductDecoration(private val spanCount: Int, private val space: 
         state: RecyclerView.State
     ) {
         val position = parent.getChildAdapterPosition(view)     // item position
+        val row = position % spanCount
         // 첫번째 열을 제외하고 좌측 여백 추가
         if (position >= 2) {
             outRect.top = space * 18
+        }
+
+        if (row != 0) {
+            outRect.left = space * 4
+        }
+        else {
+            outRect.right = space * 4
         }
     }
 }

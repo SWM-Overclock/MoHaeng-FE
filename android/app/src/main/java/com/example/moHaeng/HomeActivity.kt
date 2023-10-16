@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moHaeng.databinding.ActivityHomeBinding
+import java.lang.Math.floor
 
 class HomeActivity : AppCompatActivity() {
 
@@ -29,13 +30,13 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setupCategoryRecyclerView() {
         val recyclerViewList: RecyclerView = binding.categoryRecyclerView
-        recyclerViewList.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
+        recyclerViewList.layoutManager = GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false)
 
         val categoryAdapter = CategoryAdapter(itemList)
         recyclerViewList.adapter = categoryAdapter
 
         val space = (Resources.getSystem().displayMetrics.density).toInt()
-        recyclerViewList.addItemDecoration(GridSpaceItemDecorationList(2, space))
+        recyclerViewList.addItemDecoration(GridSpaceCategoryList(5, space))
     }
 
     private fun setupCategoryButtonFragment() {
@@ -68,6 +69,11 @@ class HomeActivity : AppCompatActivity() {
             CategoryItem("카테고리7", R.drawable.ic_launcher_background),
             CategoryItem("카테고리8", R.drawable.ic_launcher_background),
             CategoryItem("카테고리9", R.drawable.ic_launcher_background),
+            CategoryItem("카테고리0", R.drawable.ic_launcher_background),
+            CategoryItem("카테고리6", R.drawable.ic_launcher_background),
+            CategoryItem("카테고리7", R.drawable.ic_launcher_background),
+            CategoryItem("카테고리8", R.drawable.ic_launcher_background),
+            CategoryItem("카테고리9", R.drawable.ic_launcher_background),
             CategoryItem("카테고리0", R.drawable.ic_launcher_background)
         )
     }
@@ -84,7 +90,7 @@ class HomeActivity : AppCompatActivity() {
 }
 
 // GridLayoutManager의 간격 조절
-class GridSpaceItemDecorationList(private val spanCount: Int, private val space: Int) :
+class GridSpaceCategoryList(private val spanCount: Int, private val space: Int) :
     RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(
@@ -93,17 +99,29 @@ class GridSpaceItemDecorationList(private val spanCount: Int, private val space:
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        val position = parent.getChildAdapterPosition(view)     // item position
-        val row = position % 2 + 1      // item row
+        val position = parent.getChildAdapterPosition(view).toDouble()  // item position
+        val row = kotlin.math.floor(position / 5)  // item row
+
+
+        val column = position % spanCount
+
+        // 각 아이템의 폭
+        val itemWidth = (parent.width - space * (spanCount - 1)) / spanCount
+
+        // 현재 아이템의 시작 위치
+        val start = column * (itemWidth + space)
+
+        // 좌측 여백 및 우측 여백을 설정
+        outRect.left = start.toInt()
+        outRect.right = (parent.width - start - itemWidth).toInt()
 
         // 첫 행 제외하고 상단 여백 추가
-        if (row == 2) {
+        if (row != 0.0) {
             outRect.top = space * 2
         }
         // 첫번째 열을 제외하고 좌측 여백 추가
-        if (position >= 2) {
-            outRect.left = space * 8
-        }
+        outRect.left = space * 8
+        outRect.right = space * 8
     }
 }
 
@@ -120,10 +138,12 @@ class GridSpaceItemDecorationRanking(private val space: Int) :
         state: RecyclerView.State
     ) {
         val position = parent.getChildAdapterPosition(view)     // item positionw
+        val row = position % 2  // item row
 
         // 첫 행 제외하고 상단 여백 추가
         if (position >= 1) {
             outRect.top = space * 24
         }
+
     }
 }

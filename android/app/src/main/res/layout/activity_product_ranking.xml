@@ -97,7 +97,7 @@
         app:layout_constraintBottom_toTopOf="@+id/navigationView"
         app:layout_constraintTop_toBottomOf="@+id/sortContainer"
         app:layout_constraintHorizontal_bias="1.0"
-        tools:listitem="@layout/recyclerview_recommend_item">
+        tools:listitem="@layout/recyclerview_ranking_item">
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
