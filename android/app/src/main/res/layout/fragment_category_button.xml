@@ -6,10 +6,9 @@
     tools:context=".CategoryButtonFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/categoryButtonRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         tools:listitem="@layout/recyclerview_category_button">
 
     </androidx.recyclerview.widget.RecyclerView>

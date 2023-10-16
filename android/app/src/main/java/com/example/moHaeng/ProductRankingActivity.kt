@@ -1,21 +1,34 @@
 package com.example.moHaeng
 
 import android.content.res.Resources
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.moHaeng.databinding.ActivityProductListBinding
 import com.example.moHaeng.databinding.ActivityProductRankingBinding
 
 class ProductRankingActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityProductRankingBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var binding = ActivityProductRankingBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
-        setupCategoryButtonFragment()
+        binding = ActivityProductRankingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        setupCategoryButtonFragment()
+        setupProductRecyclerView()
+    }
+
+    private fun setupCategoryButtonFragment() {
+        val categoryButtonFragment = CategoryButtonFragment()
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.categoryButtonContainer, categoryButtonFragment)
+            .commit()
+    }
+
+    private fun setupProductRecyclerView() {
         val recyclerView: RecyclerView = binding.ProductRecyclerView
 
         val layoutManager = GridLayoutManager(this, 2)
@@ -33,12 +46,5 @@ class ProductRankingActivity : AppCompatActivity() {
 
         val adapter = ProductRankingAdapter(itemList)
         recyclerView.adapter = adapter
-    }
-    private fun setupCategoryButtonFragment() {
-        val categoryButtonFragment = CategoryButtonFragment()
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.categoryButtonContainer, categoryButtonFragment)
-            .commit()
     }
 }
