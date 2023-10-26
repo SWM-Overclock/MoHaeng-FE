@@ -47,6 +47,7 @@ class HomeActivity : AppCompatActivity() {
             .commit()
     }
 
+
     private fun setupRankingRecyclerView() {
         val recyclerViewRanking: RecyclerView = binding.rankingRecyclerView
         recyclerViewRanking.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

@@ -77,10 +77,9 @@
     </View>
 
     <FrameLayout
-        android:id="@+id/sortContainer"
+        android:id="@+id/sortButtonContainer"
         android:layout_width="match_parent"
-        android:layout_height="37dp"
-        android:background="@color/Gray2"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/divider2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -90,12 +89,12 @@
         android:id="@+id/ProductRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/navigationView"
-        app:layout_constraintTop_toBottomOf="@+id/sortContainer"
+        app:layout_constraintTop_toBottomOf="@+id/sortButtonContainer"
         app:layout_constraintHorizontal_bias="1.0"
         tools:listitem="@layout/recyclerview_recommend_item">
     </androidx.recyclerview.widget.RecyclerView>
