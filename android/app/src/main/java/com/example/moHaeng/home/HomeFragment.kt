@@ -37,24 +37,6 @@ class HomeFragment : Fragment() {
         return view
     }
 
-//    private fun setBottomNavigationView() {
-//        binding.navigationView.setOnItemSelectedListener { item ->
-//            when (item.itemId) {
-//                R.id.naviHomeFragment -> {
-//                    true
-//                }
-//                R.id.naviMapFragment -> {
-//                    val intent = Intent(requireContext(), LocationPermissionActivity::class.java)
-//                    startActivity(intent)
-//                    true
-//                }
-//                // 나머지 아이템에 대한 처리도 동일하게 구현합니다.
-//                else -> false
-//            }
-//        }
-//    }
-
-
     private fun setupCategoryRecyclerView() {
         val recyclerViewList: RecyclerView = binding.categoryRecyclerView
         recyclerViewList.layoutManager = GridLayoutManager(requireContext(), 5, GridLayoutManager.VERTICAL, false)

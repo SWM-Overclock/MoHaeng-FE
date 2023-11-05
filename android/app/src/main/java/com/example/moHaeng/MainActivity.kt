@@ -19,16 +19,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        supportFragmentManager.beginTransaction().replace(R.id.mainFragment, HomeFragment()).commit()
+        setContentView(binding.root)
+        setFragment(TAG_HOME, HomeFragment())
 
         binding.navigationView.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.homeFragment -> setFragment(TAG_HOME, HomeFragment())
-                R.id.MapFragment -> setFragment(TAG_MAP, MapFragment())
-                R.id.AddFragment -> setFragment(TAG_ADD_ITEM, AddItemFragment())
+                R.id.mapFragment -> setFragment(TAG_MAP, MapFragment())
+                R.id.addFragment -> setFragment(TAG_ADD_ITEM, AddItemFragment())
                 R.id.myPageFragment-> setFragment(TAG_MY_PAGE, MyPageFragment())
             }
             true
