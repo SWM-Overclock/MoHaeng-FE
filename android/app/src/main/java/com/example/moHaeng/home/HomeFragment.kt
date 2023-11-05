@@ -1,36 +1,63 @@
-package com.example.moHaeng
+package com.example.moHaeng.home
 
 import android.content.res.Resources
-import android.graphics.Rect
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.moHaeng.databinding.ActivityHomeBinding
-import java.lang.Math.floor
+import com.example.moHaeng.CategoryAdapter
+import com.example.moHaeng.CategoryButtonFragment
+import com.example.moHaeng.CategoryItem
+import com.example.moHaeng.ProductItem
+import com.example.moHaeng.R
+import com.example.moHaeng.RankingAdapter
+import com.example.moHaeng.databinding.FragmentHomeBinding
 
-class HomeActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityHomeBinding
+class HomeFragment : Fragment() {
+    private lateinit var binding: FragmentHomeBinding
     private val itemList: List<CategoryItem> = generateDummyCategoryData()
     private val productItemList: List<ProductItem> = generateDummyProductData()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
-        setContentView(view)
 
         setupCategoryRecyclerView()
         setupCategoryButtonFragment()
         setupRankingRecyclerView()
+
+        return view
     }
+
+//    private fun setBottomNavigationView() {
+//        binding.navigationView.setOnItemSelectedListener { item ->
+//            when (item.itemId) {
+//                R.id.naviHomeFragment -> {
+//                    true
+//                }
+//                R.id.naviMapFragment -> {
+//                    val intent = Intent(requireContext(), LocationPermissionActivity::class.java)
+//                    startActivity(intent)
+//                    true
+//                }
+//                // 나머지 아이템에 대한 처리도 동일하게 구현합니다.
+//                else -> false
+//            }
+//        }
+//    }
+
 
     private fun setupCategoryRecyclerView() {
         val recyclerViewList: RecyclerView = binding.categoryRecyclerView
-        recyclerViewList.layoutManager = GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false)
+        recyclerViewList.layoutManager = GridLayoutManager(requireContext(), 5, GridLayoutManager.VERTICAL, false)
 
         val categoryAdapter = CategoryAdapter(itemList)
         recyclerViewList.adapter = categoryAdapter
@@ -42,7 +69,7 @@ class HomeActivity : AppCompatActivity() {
     private fun setupCategoryButtonFragment() {
         val categoryButtonFragment = CategoryButtonFragment()
 
-        supportFragmentManager.beginTransaction()
+        childFragmentManager.beginTransaction()
             .replace(R.id.categoryButtonContainer, categoryButtonFragment)
             .commit()
     }
@@ -50,7 +77,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setupRankingRecyclerView() {
         val recyclerViewRanking: RecyclerView = binding.rankingRecyclerView
-        recyclerViewRanking.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerViewRanking.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         val rankingAdapter = RankingAdapter(productItemList)
         recyclerViewRanking.adapter = rankingAdapter
@@ -90,61 +117,6 @@ class HomeActivity : AppCompatActivity() {
     }
 }
 
-// GridLayoutManager의 간격 조절
-class GridSpaceCategoryList(private val spanCount: Int, private val space: Int) :
-    RecyclerView.ItemDecoration() {
-
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        val position = parent.getChildAdapterPosition(view).toDouble()  // item position
-        val row = kotlin.math.floor(position / 5)  // item row
-
-
-        val column = position % spanCount
-
-        // 각 아이템의 폭
-        val itemWidth = (parent.width - space * (spanCount - 1)) / spanCount
-
-        // 현재 아이템의 시작 위치
-        val start = column * (itemWidth + space)
-
-        // 좌측 여백 및 우측 여백을 설정
-        outRect.left = start.toInt()
-        outRect.right = (parent.width - start - itemWidth).toInt()
-
-        // 첫 행 제외하고 상단 여백 추가
-        if (row != 0.0) {
-            outRect.top = space * 2
-        }
-        // 첫번째 열을 제외하고 좌측 여백 추가
-        outRect.left = space * 8
-        outRect.right = space * 8
-    }
-}
 
 
 
-// 랭킹 recyclerview 간격 조절
-class GridSpaceItemDecorationRanking(private val space: Int) :
-    RecyclerView.ItemDecoration() {
-
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        val position = parent.getChildAdapterPosition(view)     // item positionw
-        val row = position % 2  // item row
-
-        // 첫 행 제외하고 상단 여백 추가
-        if (position >= 1) {
-            outRect.top = space * 24
-        }
-
-    }
-}
