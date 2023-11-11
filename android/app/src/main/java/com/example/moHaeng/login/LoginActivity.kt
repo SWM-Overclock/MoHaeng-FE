@@ -45,14 +45,20 @@ class LoginActivity : AppCompatActivity() {
             return retrofit
         }
     }
+
     data class LoginResponse(
+        val id: Long,
+        val nickName: String,
+        val email: String,
+        val imageUrl: String,
+        val tokenType: String,
         val accessToken: String,
-        val refreshToken: String,
+        val refreshToken: String
     )
 
     data class AccessTokenRequest(
-        @SerializedName("accessToken")
-        val accessToken: String
+        @SerializedName("token")
+        val token: String
     )
 
 
@@ -60,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
 
         // 기존에 정의한 메소드들과 함께, 서버로 Access Token을 보내는 메소드를 추가
         @POST("kakao")
-        fun sendAccessTokenToServer(@Body accessToken: AccessTokenRequest): Call<LoginResponse>
+        fun sendAccessTokenToServer(@Body token: AccessTokenRequest): Call<LoginResponse>
     }
 
 

@@ -1,6 +1,5 @@
 package com.example.moHaeng
 
-import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             when(item.itemId) {
                 R.id.homeFragment -> setFragment(TAG_HOME, HomeFragment())
                 R.id.mapFragment -> setFragment(TAG_MAP, MapFragment())
-                R.id.addFragment -> setFragment(TAG_ADD_ITEM, AddItemFragment())
+                R.id.addFragment -> setFragment(TAG_ADD_ITEM, AddEventFragment())
                 R.id.myPageFragment-> setFragment(TAG_MY_PAGE, MyPageFragment())
             }
             true
