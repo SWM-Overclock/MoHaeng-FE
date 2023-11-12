@@ -28,13 +28,12 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val view = binding.root
 
         setupCategoryRecyclerView()
         setupCategoryButtonFragment()
         setupRankingRecyclerView()
 
-        return view
+        return binding.root
     }
 
     private fun setupCategoryRecyclerView() {
