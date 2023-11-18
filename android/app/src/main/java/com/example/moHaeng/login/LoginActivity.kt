@@ -1,16 +1,11 @@
 package com.example.moHaeng.login
 
-import android.app.Activity
 import android.content.ContentValues
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.moHaeng.BuildConfig
-import com.example.moHaeng.LocationPermissionActivity
 import com.example.moHaeng.R
 import com.example.moHaeng.databinding.ActivityLoginBinding
 import com.google.gson.annotations.SerializedName
@@ -67,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
         // 기존에 정의한 메소드들과 함께, 서버로 Access Token을 보내는 메소드를 추가
         @POST("kakao")
         fun sendAccessTokenToServer(@Body token: AccessTokenRequest): Call<LoginResponse>
-        fun validateToken(token: String): Any
+
     }
 
 
@@ -85,27 +80,13 @@ class LoginActivity : AppCompatActivity() {
         binding.btnStartKakaoLogin.setOnClickListener {
             kakaoLogin() //로그인
         }
-        binding.btnStartKakaoLogout.setOnClickListener {
-            kakaoLogout() //로그아웃
-        }
-        binding.btnStartKakaoUnlink.setOnClickListener {
-            kakaoUnlink() //연결해제
-        }
     }
 
     private fun kakaoLogin() {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
-                TextMsg(this, "카카오계정으로 로그인 실패 : ${error}")
-                setLogin(false)
+                Toast.makeText(this, "카카오 계정으로 로그인 실패", Toast.LENGTH_SHORT).show()
             } else if (token != null) {
-
-                UserApiClient.instance.me { user, error ->
-                    TextMsg(this, "카카오계정으로 로그인 성공 \n\n " +
-                            "token: ${token.accessToken} \n\n " +
-                            "me: ${user}")
-                    setLogin(true)
-                }
                 // Access Token을 서버로 보내는 메소드 호출
                 sendAccessTokenToServer(token.accessToken)
             }
@@ -115,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
             UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
                 if (error != null) {
-                    TextMsg(this, "카카오톡으로 로그인 실패 : ${error}")
+                    Toast.makeText(this, "카카오톡으로 로그인 실패", Toast.LENGTH_SHORT).show()
 
                     // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
                     // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
@@ -126,7 +107,6 @@ class LoginActivity : AppCompatActivity() {
                     // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
                     UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
                 } else if (token != null) {
-                    TextMsg(this, "카카오톡으로 로그인 성공 ${token.accessToken}")
                     Log.e(ContentValues.TAG, "엑세스 토큰: ${token.accessToken}")
 
                     // Access Token을 서버로 보내는 메소드 호출
@@ -144,11 +124,12 @@ class LoginActivity : AppCompatActivity() {
         // 로그아웃
         UserApiClient.instance.logout { error ->
             if (error != null) {
-                TextMsg(this, "로그아웃 실패. SDK에서 토큰 삭제됨: ${error}")
+                Toast.makeText(this, "로그아웃 실패, 다시 시도해주세요", Toast.LENGTH_SHORT).show()
             }
             else {
-                TextMsg(this, "로그아웃 성공. SDK에서 토큰 삭제됨")
-                setLogin(false)
+                JwtCheck().removeJwtToken(this)
+                Toast.makeText(this, "로그아웃 성공", Toast.LENGTH_SHORT).show()
+
             }
         }
     }
@@ -157,24 +138,15 @@ class LoginActivity : AppCompatActivity() {
         // 연결 끊기
         UserApiClient.instance.unlink { error ->
             if (error != null) {
-                TextMsg(this, "연결 끊기 실패: ${error}")
+                Toast.makeText(this, "연결 끊기 실패, 다시 시도해주세요", Toast.LENGTH_SHORT).show()
             }
             else {
-                TextMsg(this, "연결 끊기 성공. SDK에서 토큰 삭제 됨")
-                setLogin(false)
+                JwtCheck().removeJwtToken(this)
+                Toast.makeText(this, "카카오톡 연결 끊기 성공", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun TextMsg(act: Activity, msg : String){
-        binding.tvHashKey.text = msg
-    }
-
-    private fun setLogin(bool: Boolean){
-        binding.btnStartKakaoLogin.visibility = if(bool) View.GONE else View.VISIBLE
-        binding.btnStartKakaoLogout.visibility = if(bool) View.VISIBLE else View.GONE
-        binding.btnStartKakaoUnlink.visibility = if(bool) View.VISIBLE else View.GONE
-    }
 
     private fun sendAccessTokenToServer(accessToken: String) {
         // Retrofit 인스턴스 생성
@@ -204,8 +176,6 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(context, "서버와 통신 실패", Toast.LENGTH_SHORT).show()
             }
         })
-
-        setLogin(true)
     }
 
     // sharedpreference에 jwt 토큰을 저장하는 함수
