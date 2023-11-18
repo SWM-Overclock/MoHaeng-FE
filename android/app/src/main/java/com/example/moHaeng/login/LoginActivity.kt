@@ -67,6 +67,7 @@ class LoginActivity : AppCompatActivity() {
         // 기존에 정의한 메소드들과 함께, 서버로 Access Token을 보내는 메소드를 추가
         @POST("kakao")
         fun sendAccessTokenToServer(@Body token: AccessTokenRequest): Call<LoginResponse>
+        fun validateToken(token: String): Any
     }
 
 
@@ -89,9 +90,6 @@ class LoginActivity : AppCompatActivity() {
         }
         binding.btnStartKakaoUnlink.setOnClickListener {
             kakaoUnlink() //연결해제
-        }
-        binding.btnLocationPermission.setOnClickListener {
-            btn_location_permission() //연결해제
         }
     }
 
@@ -191,15 +189,13 @@ class LoginActivity : AppCompatActivity() {
                 val context = this@LoginActivity
 
                 if (response.isSuccessful) {
-                    Log.e(ContentValues.TAG, "서버 response 반환 성공")
                     val loginResponse = response.body()
-                    Log.e(ContentValues.TAG, "반환값 = ${response.body().toString()}")
                     if (loginResponse != null) {
-                        saveJwtToken(context, loginResponse.accessToken, loginResponse.refreshToken)
+                        JwtCheck().saveJwtToken(context, loginResponse.accessToken, loginResponse.refreshToken)
+                        JwtCheck().goToMainActivity(context)
                     }
-                    // 예시) 로그인 성공 여부 등을 확인하고 처리
                 } else {
-                    Log.e(ContentValues.TAG, "서버 response 반환 실패")
+                    Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -213,18 +209,4 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // sharedpreference에 jwt 토큰을 저장하는 함수
-    fun saveJwtToken(context: Context, accessToken: String, refreshToken: String) {
-        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString("refreshToken", refreshToken)
-        editor.putString("accessToken", accessToken)
-        editor.apply()
-    }
-
-
-    //    btn_location_permission을 클릭하면 LocationPermissionActivity로 이동
-    fun btn_location_permission() {
-        val intent = Intent(this, LocationPermissionActivity::class.java)
-        startActivity(intent)
-    }
 }
