@@ -1,4 +1,4 @@
-package com.example.moHaeng
+package com.example.moHaeng.productSearch
 
 import RecommendAdapter
 import android.content.res.Resources
@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moHaeng.CategoryButtonFragment
+import com.example.moHaeng.R
+import com.example.moHaeng.sort.SortedFragment
 import com.example.moHaeng.databinding.ActivityProductListBinding
 
 class ProductListActivity : AppCompatActivity() {

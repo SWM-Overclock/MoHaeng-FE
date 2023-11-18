@@ -1,10 +1,12 @@
-package com.example.moHaeng
+package com.example.moHaeng.productSearch
 
 import android.content.res.Resources
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moHaeng.CategoryButtonFragment
+import com.example.moHaeng.R
 import com.example.moHaeng.databinding.ActivityProductRankingBinding
 
 class ProductRankingActivity : AppCompatActivity() {

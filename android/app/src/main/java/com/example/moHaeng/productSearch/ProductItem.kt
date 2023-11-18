@@ -1,4 +1,4 @@
-package com.example.moHaeng
+package com.example.moHaeng.productSearch
 
 data class ProductItem(
     val shopName: String,     // 상점 이름

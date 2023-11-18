@@ -1,4 +1,4 @@
-package com.example.moHaeng
+package com.example.moHaeng.productSearch
 
 import RecommendAdapter
 import android.os.Bundle

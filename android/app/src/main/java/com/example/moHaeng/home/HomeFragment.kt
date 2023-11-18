@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moHaeng.CategoryAdapter
 import com.example.moHaeng.CategoryButtonFragment
-import com.example.moHaeng.CategoryItem
-import com.example.moHaeng.ProductItem
+import com.example.moHaeng.productSearch.CategoryItem
+import com.example.moHaeng.productSearch.ProductItem
 import com.example.moHaeng.R
-import com.example.moHaeng.RankingAdapter
+import com.example.moHaeng.productSearch.RankingAdapter
 import com.example.moHaeng.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {

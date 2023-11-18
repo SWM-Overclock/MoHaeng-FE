@@ -4,8 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.example.moHaeng.addEvent.AddEventFragment
 import com.example.moHaeng.databinding.ActivityMainBinding
 import com.example.moHaeng.home.HomeFragment
+import com.example.moHaeng.maps.MapFragment
+import com.example.moHaeng.userPage.MyPageFragment
 
 
 private const val TAG_HOME = "home"

@@ -45,10 +45,10 @@
             android:name=".login.LoginActivity"
             android:exported="true"/>
         <activity
-            android:name=".ProductRankingActivity"
+            android:name=".productSearch.ProductRankingActivity"
             android:exported="false" />
         <activity
-            android:name=".ProductListActivity"
+            android:name=".productSearch.ProductListActivity"
             android:exported="false" />
 
         <activity android:name=".MainActivity"
@@ -59,7 +59,7 @@
             android:exported="true" />
 
         <activity
-            android:name=".DetailActivity"
+            android:name=".productSearch.DetailActivity"
             android:exported="false" />
     </application>
 

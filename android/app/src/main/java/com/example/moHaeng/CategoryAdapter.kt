@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moHaeng.databinding.RecyclerviewCategoryListBinding
+import com.example.moHaeng.productSearch.CategoryItem
 
 class CategoryAdapter(private val itemList: List<CategoryItem>) : RecyclerView.Adapter<CategoryAdapter.CategoryListViewHolder>() {
 

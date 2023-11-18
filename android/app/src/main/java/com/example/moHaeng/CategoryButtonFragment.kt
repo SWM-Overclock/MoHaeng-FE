@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moHaeng.databinding.FragmentCategoryButtonBinding
+import com.example.moHaeng.productSearch.CategoryItem
 
 
 class CategoryButtonFragment : Fragment() {
