@@ -76,9 +76,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:text="내 주변 행사상품"
-                    android:textSize="18dp"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/home_around_product"
+                    android:textSize="18sp"
                     android:fontFamily="@font/pretendard_bold">
 
                 </TextView>
@@ -116,10 +116,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/pretendard_bold"
-                        android:text="카테고리 랭킹"
-                        android:textSize="18dp"></TextView>
+                        android:text="@string/home_category_ranking"
+                        android:textSize="18sp">
+                    </TextView>
 
-                    <RelativeLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -127,22 +128,29 @@
                         android:gravity="center">
 
                         <TextView
+                            android:id="@+id/findMoreText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="더보기"
+                            android:text="@string/home_find_more"
                             android:textSize="12sp"
-                            android:id="@+id/textView"
                             android:textColor="@color/Gray3"
-                            android:layout_centerVertical="true"/>
+                            android:layout_centerVertical="true"
+                            app:layout_constraintEnd_toStartOf="@id/findMoreButton"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                         <ImageView
+                            android:id="@+id/findMoreButton"
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@id/textView"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/right_plus_button" />
-                    </RelativeLayout>
+                            android:src="@drawable/right_plus_button"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+
+                            app:layout_constraintEnd_toEndOf="parent"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </RelativeLayout>
 

@@ -15,7 +15,6 @@ class GridSpaceItemDecorationRanking(private val space: Int) :
         state: RecyclerView.State
     ) {
         val position = parent.getChildAdapterPosition(view)     // item positionw
-        val row = position % 2  // item row
 
         // 첫 행 제외하고 상단 여백 추가
         if (position >= 1) {
