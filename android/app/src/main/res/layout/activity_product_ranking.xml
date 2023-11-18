@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProductListActivity">
+    tools:context=".ProductRankingActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbar"
@@ -32,7 +32,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/around_product"
+            android:text="@string/category_ranking"
             android:textSize="16sp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -77,9 +77,10 @@
     </View>
 
     <FrameLayout
-        android:id="@+id/sortButtonContainer"
+        android:id="@+id/sortContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="37dp"
+        android:background="@color/Gray2"
         app:layout_constraintTop_toBottomOf="@+id/divider2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -89,14 +90,14 @@
         android:id="@+id/ProductRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/navigationView"
-        app:layout_constraintTop_toBottomOf="@+id/sortButtonContainer"
+        app:layout_constraintTop_toBottomOf="@+id/sortContainer"
         app:layout_constraintHorizontal_bias="1.0"
-        tools:listitem="@layout/recyclerview_recommend_item">
+        tools:listitem="@layout/recyclerview_ranking_item">
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -113,6 +114,5 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bot_navi_menu" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

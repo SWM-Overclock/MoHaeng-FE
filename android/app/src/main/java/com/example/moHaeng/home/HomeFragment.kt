@@ -1,54 +1,64 @@
-package com.example.moHaeng
+package com.example.moHaeng.home
 
 import android.content.res.Resources
-import android.graphics.Rect
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.moHaeng.databinding.ActivityHomeBinding
+import com.example.moHaeng.CategoryAdapter
+import com.example.moHaeng.CategoryButtonFragment
+import com.example.moHaeng.CategoryItem
+import com.example.moHaeng.ProductItem
+import com.example.moHaeng.R
+import com.example.moHaeng.RankingAdapter
+import com.example.moHaeng.databinding.FragmentHomeBinding
 
-class HomeActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityHomeBinding
+class HomeFragment : Fragment() {
+    private lateinit var binding: FragmentHomeBinding
     private val itemList: List<CategoryItem> = generateDummyCategoryData()
     private val productItemList: List<ProductItem> = generateDummyProductData()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         setupCategoryRecyclerView()
         setupCategoryButtonFragment()
         setupRankingRecyclerView()
+
+        return binding.root
     }
 
     private fun setupCategoryRecyclerView() {
         val recyclerViewList: RecyclerView = binding.categoryRecyclerView
-        recyclerViewList.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
+        recyclerViewList.layoutManager = GridLayoutManager(requireContext(), 5, GridLayoutManager.VERTICAL, false)
 
         val categoryAdapter = CategoryAdapter(itemList)
         recyclerViewList.adapter = categoryAdapter
 
         val space = (Resources.getSystem().displayMetrics.density).toInt()
-        recyclerViewList.addItemDecoration(GridSpaceItemDecorationList(2, space))
+        recyclerViewList.addItemDecoration(GridSpaceCategoryList(5, space))
     }
 
     private fun setupCategoryButtonFragment() {
         val categoryButtonFragment = CategoryButtonFragment()
 
-        supportFragmentManager.beginTransaction()
+        childFragmentManager.beginTransaction()
             .replace(R.id.categoryButtonContainer, categoryButtonFragment)
             .commit()
     }
 
+
     private fun setupRankingRecyclerView() {
         val recyclerViewRanking: RecyclerView = binding.rankingRecyclerView
-        recyclerViewRanking.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerViewRanking.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         val rankingAdapter = RankingAdapter(productItemList)
         recyclerViewRanking.adapter = rankingAdapter
@@ -68,6 +78,11 @@ class HomeActivity : AppCompatActivity() {
             CategoryItem("카테고리7", R.drawable.ic_launcher_background),
             CategoryItem("카테고리8", R.drawable.ic_launcher_background),
             CategoryItem("카테고리9", R.drawable.ic_launcher_background),
+            CategoryItem("카테고리0", R.drawable.ic_launcher_background),
+            CategoryItem("카테고리6", R.drawable.ic_launcher_background),
+            CategoryItem("카테고리7", R.drawable.ic_launcher_background),
+            CategoryItem("카테고리8", R.drawable.ic_launcher_background),
+            CategoryItem("카테고리9", R.drawable.ic_launcher_background),
             CategoryItem("카테고리0", R.drawable.ic_launcher_background)
         )
     }
@@ -83,47 +98,6 @@ class HomeActivity : AppCompatActivity() {
     }
 }
 
-// GridLayoutManager의 간격 조절
-class GridSpaceItemDecorationList(private val spanCount: Int, private val space: Int) :
-    RecyclerView.ItemDecoration() {
-
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        val position = parent.getChildAdapterPosition(view)     // item position
-        val row = position % 2 + 1      // item row
-
-        // 첫 행 제외하고 상단 여백 추가
-        if (row == 2) {
-            outRect.top = space * 2
-        }
-        // 첫번째 열을 제외하고 좌측 여백 추가
-        if (position >= 2) {
-            outRect.left = space * 8
-        }
-    }
-}
 
 
 
-// 랭킹 recyclerview 간격 조절
-class GridSpaceItemDecorationRanking(private val space: Int) :
-    RecyclerView.ItemDecoration() {
-
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        val position = parent.getChildAdapterPosition(view)     // item positionw
-
-        // 첫 행 제외하고 상단 여백 추가
-        if (position >= 1) {
-            outRect.top = space * 24
-        }
-    }
-}
