@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Fragment를 설정하고 백 스택에 추가하는 함수
-    private fun setFragment(tag: String, fragment: Fragment) {
+    public fun setFragment(tag: String, fragment: Fragment) {
         val manager: FragmentManager = supportFragmentManager
         val fragTransaction = manager.beginTransaction()
 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moHaeng.CategoryAdapter
 import com.example.moHaeng.CategoryButtonFragment
+import com.example.moHaeng.MainActivity
 import com.example.moHaeng.productSearch.CategoryItem
 import com.example.moHaeng.productSearch.ProductItem
 import com.example.moHaeng.R
@@ -46,11 +47,7 @@ class HomeFragment : Fragment() {
 
     //rankingFindMoreButton버튼을 누르면 지금 homeFragment가 있는 activity의 fragment를 변경
     private fun setupRankingFindMoreButton() {
-        val activity = requireActivity()
-        val fragmentManager = activity.supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.mainFragment, ProductRankingFragment())
-        fragmentTransaction.commit()
+        (activity as MainActivity).setFragment("productRanking", ProductRankingFragment())
     }
 
 
