@@ -45,9 +45,6 @@
             android:name=".login.LoginActivity"
             android:exported="true"/>
 
-        <activity
-            android:name=".productSearch.ProductRankingActivity"
-            android:exported="false" />
 
         <activity android:name=".MainActivity"
             android:exported="true"/>

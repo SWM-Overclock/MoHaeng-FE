@@ -121,6 +121,7 @@
                     </TextView>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/rankingFindMoreButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"

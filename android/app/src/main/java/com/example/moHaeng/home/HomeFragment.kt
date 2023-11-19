@@ -16,6 +16,7 @@ import com.example.moHaeng.productSearch.ProductItem
 import com.example.moHaeng.R
 import com.example.moHaeng.productSearch.RankingAdapter
 import com.example.moHaeng.databinding.FragmentHomeBinding
+import com.example.moHaeng.productSearch.ProductRankingFragment
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -35,6 +36,23 @@ class HomeFragment : Fragment() {
 
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.rankingFindMoreButton.setOnClickListener {
+            setupRankingFindMoreButton()
+        }
+    }
+
+    //rankingFindMoreButton버튼을 누르면 지금 homeFragment가 있는 activity의 fragment를 변경
+    private fun setupRankingFindMoreButton() {
+        val activity = requireActivity()
+        val fragmentManager = activity.supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.mainFragment, ProductRankingFragment())
+        fragmentTransaction.commit()
+    }
+
 
     private fun setupCategoryRecyclerView() {
         val recyclerViewList: RecyclerView = binding.categoryRecyclerView
