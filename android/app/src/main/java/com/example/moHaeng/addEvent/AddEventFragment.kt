@@ -1,4 +1,4 @@
-package com.example.moHaeng
+package com.example.moHaeng.addEvent
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.moHaeng.databinding.FragmentAddItemBinding
-import com.example.moHaeng.home.HomeFragment
 import java.util.Calendar
 
 

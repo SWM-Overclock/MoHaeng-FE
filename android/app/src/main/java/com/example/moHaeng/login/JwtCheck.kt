@@ -47,4 +47,13 @@ public class JwtCheck {
         editor.apply()
     }
 
+    //jwttoken을 sharedpreference에서 제거하는 함수
+    fun removeJwtToken(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.remove("refreshToken")
+        editor.remove("accessToken")
+        editor.apply()
+    }
+
 }

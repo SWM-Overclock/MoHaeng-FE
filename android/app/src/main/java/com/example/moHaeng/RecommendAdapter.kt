@@ -2,7 +2,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.moHaeng.ProductItem
+import com.example.moHaeng.productSearch.ProductItem
 import com.example.moHaeng.databinding.RecyclerviewRecommendItemBinding
 
 

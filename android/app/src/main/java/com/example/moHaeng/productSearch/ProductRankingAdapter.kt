@@ -1,4 +1,4 @@
-package com.example.moHaeng
+package com.example.moHaeng.productSearch
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

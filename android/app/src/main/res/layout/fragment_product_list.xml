@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProductListActivity">
+    tools:context=".productSearch.ProductListFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbar"
@@ -92,27 +92,12 @@
         android:layout_marginTop="8dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
+        android:layout_marginBottom="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/navigationView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sortButtonContainer"
         app:layout_constraintHorizontal_bias="1.0"
         tools:listitem="@layout/recyclerview_recommend_item">
     </androidx.recyclerview.widget.RecyclerView>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        app:itemBackground="@color/white"
-        app:itemIconTint="@drawable/menu_click_color"
-        app:itemTextColor="@drawable/menu_click_color"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bot_navi_menu" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

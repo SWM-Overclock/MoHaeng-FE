@@ -1,11 +1,9 @@
-package com.example.moHaeng
+package com.example.moHaeng.productSearch
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moHaeng.databinding.RecyclerviewProductRankingBinding
-import com.example.moHaeng.databinding.RecyclerviewRecommendItemBinding
 
 class RankingAdapter (private val itemList: List<ProductItem>) : RecyclerView.Adapter<RankingAdapter.ViewHolder>() {
 

@@ -1,28 +1,35 @@
-package com.example.moHaeng
+package com.example.moHaeng.productSearch
 
 import RecommendAdapter
 import android.content.res.Resources
-import android.graphics.Rect
 import android.os.Bundle
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.moHaeng.databinding.ActivityProductListBinding
+import com.example.moHaeng.CategoryButtonFragment
+import com.example.moHaeng.R
+import com.example.moHaeng.databinding.FragmentProductListBinding
+import com.example.moHaeng.sort.SortedFragment
 
-class ProductListActivity : AppCompatActivity() {
+class ProductListFragment : Fragment() {
 
-    private lateinit var binding: ActivityProductListBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityProductListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    private lateinit var binding: FragmentProductListBinding
 
-        // 프래그먼트 설정 및 제품 리사이클러뷰 설정 호출
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentProductListBinding.inflate(inflater, container, false)
+
         setupFragments()
         setupProductRecyclerView()
+
+        return binding.root
     }
 
     private fun setupFragments() {
@@ -32,8 +39,8 @@ class ProductListActivity : AppCompatActivity() {
     }
 
     private fun setupFragment(fragment: Fragment, containerId: Int) {
-        // 프래그먼트를 지정된 컨테이너에 교체
-        supportFragmentManager.beginTransaction()
+
+        childFragmentManager.beginTransaction()
             .replace(containerId, fragment)
             .commit()
     }
@@ -42,12 +49,12 @@ class ProductListActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = binding.ProductRecyclerView
 
         // 그리드 레이아웃 매니저 설정
-        val layoutManager = GridLayoutManager(this, 2)
+        val layoutManager = GridLayoutManager(activity, 2)
         recyclerView.layoutManager = layoutManager
 
         // 간격 설정
         val space = (Resources.getSystem().displayMetrics.density).toInt()
-        recyclerView.addItemDecoration(GridSpaceProductDecoration(2, space))
+        recyclerView.addItemDecoration(DecorationProductRecycler(2, space))
 
         // 상품 아이템 리스트 생성
         val itemList = listOf(
@@ -60,31 +67,5 @@ class ProductListActivity : AppCompatActivity() {
         // 어댑터 설정
         val adapter = RecommendAdapter(itemList)
         recyclerView.adapter = adapter
-    }
-}
-
-class GridSpaceProductDecoration(private val spanCount: Int, private val space: Int) :
-    RecyclerView.ItemDecoration() {
-
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        // 아이템 위치 및 행 계산
-        val position = parent.getChildAdapterPosition(view)
-        val row = position % spanCount
-
-        // 간격 적용
-        if (position >= 2) {
-            outRect.top = space * 18
-        }
-
-        if (row != 0) {
-            outRect.left = space * 4
-        } else {
-            outRect.right = space * 4
-        }
     }
 }

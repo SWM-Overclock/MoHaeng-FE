@@ -11,11 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moHaeng.CategoryAdapter
 import com.example.moHaeng.CategoryButtonFragment
-import com.example.moHaeng.CategoryItem
-import com.example.moHaeng.ProductItem
+import com.example.moHaeng.MainActivity
+import com.example.moHaeng.productSearch.CategoryItem
+import com.example.moHaeng.productSearch.ProductItem
 import com.example.moHaeng.R
-import com.example.moHaeng.RankingAdapter
+import com.example.moHaeng.productSearch.RankingAdapter
 import com.example.moHaeng.databinding.FragmentHomeBinding
+import com.example.moHaeng.productSearch.ProductRankingFragment
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -35,6 +37,19 @@ class HomeFragment : Fragment() {
 
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.rankingFindMoreButton.setOnClickListener {
+            setupRankingFindMoreButton()
+        }
+    }
+
+    //rankingFindMoreButton버튼을 누르면 지금 homeFragment가 있는 activity의 fragment를 변경
+    private fun setupRankingFindMoreButton() {
+        (activity as MainActivity).setFragment("productRanking", ProductRankingFragment())
+    }
+
 
     private fun setupCategoryRecyclerView() {
         val recyclerViewList: RecyclerView = binding.categoryRecyclerView

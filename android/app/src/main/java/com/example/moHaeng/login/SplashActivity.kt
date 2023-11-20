@@ -14,13 +14,16 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        //최소 1초간 스플래시 화면을 보여주며 로그인 여부를 확인한다.
+        Handler(Looper.getMainLooper()).postDelayed({
+            finish()
+            checkLogin()
+        }, 1000)
+    }
 
-
-
+    private fun checkLogin() {
         val jwtAccessToken = JwtCheck().getAccessToken(this)
 
-
-        //1초간
         if (jwtAccessToken != null) {
             JwtCheck().goToMainActivity(this)
         }
@@ -34,7 +37,5 @@ class SplashActivity : AppCompatActivity() {
                 JwtCheck().goToLoginActivity(this)
             }
         }
-
-
     }
 }
