@@ -1,6 +1,8 @@
 package com.example.moHaeng
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -19,14 +21,16 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private var backPressedTime: Long = 0
+    private val DOUBLE_BACK_PRESS_INTERVAL: Long = 2000
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 기본적으로 HomeFragment를 표시
-        setFragment(TAG_HOME, HomeFragment())
+        setFirstFragment(TAG_HOME, HomeFragment())
 
         binding.navigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -39,14 +43,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setFirstFragment(tag: String, fragment: Fragment) {
+        val manager: FragmentManager = supportFragmentManager
+        val fragTransaction = manager.beginTransaction()
+
+        fragTransaction.replace(R.id.mainFragment, fragment, tag)
+        fragTransaction.commitAllowingStateLoss()
+    }
+
     // Fragment를 설정하고 백 스택에 추가하는 함수
-    public fun setFragment(tag: String, fragment: Fragment) {
+    fun setFragment(tag: String, fragment: Fragment) {
         val manager: FragmentManager = supportFragmentManager
         val fragTransaction = manager.beginTransaction()
 
         // 백 스택에 현재 Fragment 추가
         fragTransaction.replace(R.id.mainFragment, fragment, tag)
-        fragTransaction.addToBackStack(null)
+        //백 스택에 이미 존재하는 Fragment가 아닌 경우에만 추가
+        if (!manager.popBackStackImmediate(tag, 0)) {
+            fragTransaction.addToBackStack(tag)
+        }
         fragTransaction.commitAllowingStateLoss()
     }
 
@@ -54,10 +69,15 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val manager: FragmentManager = supportFragmentManager
         if (manager.backStackEntryCount > 0) {
-            // 백 스택에 Fragment가 있는 경우, 이전 Fragment로 이동
             manager.popBackStack()
         } else {
-            super.onBackPressed()
+            if (System.currentTimeMillis() > backPressedTime + DOUBLE_BACK_PRESS_INTERVAL) {
+                backPressedTime = System.currentTimeMillis()
+                Toast.makeText(this, "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+            } else {
+                super.onBackPressed()
+            }
         }
     }
+
 }
