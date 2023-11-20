@@ -70,7 +70,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:gravity="center_vertical"
             android:text="@string/set_location_search_hint"
             android:textColor="@color/Gray5"
@@ -80,10 +80,10 @@
         </TextView>
         <ImageView
             android:id="@+id/searchButton"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:src="@drawable/home_search_button"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -92,6 +92,7 @@
         </ImageView>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/locationSetView"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -134,5 +135,20 @@
 
         </ImageView>
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/Gray1"
+        app:layout_constraintTop_toBottomOf="@id/locationSetView">
+    </View>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        tools:listitem="@layout/recyclerview_location_edit"
+        app:layout_constraintTop_toBottomOf="@+id/divider">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
