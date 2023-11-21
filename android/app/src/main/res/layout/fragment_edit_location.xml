@@ -144,6 +144,7 @@
     </View>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/locationListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         tools:listitem="@layout/recyclerview_location_edit"

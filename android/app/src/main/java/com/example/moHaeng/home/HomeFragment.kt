@@ -17,6 +17,7 @@ import com.example.moHaeng.productSearch.ProductItem
 import com.example.moHaeng.R
 import com.example.moHaeng.productSearch.RankingAdapter
 import com.example.moHaeng.databinding.FragmentHomeBinding
+import com.example.moHaeng.location.SetLocationFragment
 import com.example.moHaeng.productSearch.ProductRankingFragment
 
 class HomeFragment : Fragment() {
@@ -34,6 +35,7 @@ class HomeFragment : Fragment() {
         setupCategoryRecyclerView()
         setupCategoryButtonFragment()
         setupRankingRecyclerView()
+        setupLocationContainer()
 
         return binding.root
     }
@@ -111,6 +113,14 @@ class HomeFragment : Fragment() {
             ProductItem("상점2", "상품2", "5%", "10,000", "9,500", true, "2")
         )
     }
+
+    //locationContainer늘 누르면 locationFragment로 이동하는 함수
+    private fun setupLocationContainer() {
+        binding.locationContainer.setOnClickListener {
+            (activity as MainActivity).setFragment("location", SetLocationFragment())
+        }
+    }
+
 }
 
 
