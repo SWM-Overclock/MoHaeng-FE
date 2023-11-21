@@ -54,5 +54,9 @@ class EditLocationFragment : Fragment() {
             LocationItem("21", "집", "서울시 강남구", false),
             LocationItem("22", "집", "서울시 강남구", false),
         )
+
+        val adapter = EditAdapter(locationList)
+        recyclerView.adapter = adapter
     }
+
 }

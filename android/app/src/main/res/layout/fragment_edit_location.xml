@@ -147,7 +147,10 @@
         android:id="@+id/locationListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="60dp"
         tools:listitem="@layout/recyclerview_location_edit"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/divider">
 
     </androidx.recyclerview.widget.RecyclerView>

@@ -17,6 +17,7 @@ import com.example.moHaeng.productSearch.ProductItem
 import com.example.moHaeng.R
 import com.example.moHaeng.productSearch.RankingAdapter
 import com.example.moHaeng.databinding.FragmentHomeBinding
+import com.example.moHaeng.location.EditLocationFragment
 import com.example.moHaeng.location.SetLocationFragment
 import com.example.moHaeng.productSearch.ProductRankingFragment
 
@@ -117,7 +118,7 @@ class HomeFragment : Fragment() {
     //locationContainer늘 누르면 locationFragment로 이동하는 함수
     private fun setupLocationContainer() {
         binding.locationContainer.setOnClickListener {
-            (activity as MainActivity).setFragment("location", SetLocationFragment())
+            (activity as MainActivity).setFragment("location", EditLocationFragment())
         }
     }
 
