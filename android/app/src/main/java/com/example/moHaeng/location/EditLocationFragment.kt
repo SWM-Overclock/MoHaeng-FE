@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moHaeng.MainActivity
 import com.example.moHaeng.databinding.FragmentEditLocationBinding
+import com.example.moHaeng.maps.MapFragment
 
 class EditLocationFragment : Fragment() {
 
@@ -21,6 +23,7 @@ class EditLocationFragment : Fragment() {
         binding = FragmentEditLocationBinding.inflate(inflater, container, false)
 
         setEditLocationRecyclerView()
+        setupMapContainer()
 
         return binding.root
     }
@@ -57,6 +60,12 @@ class EditLocationFragment : Fragment() {
 
         val adapter = EditAdapter(locationList)
         recyclerView.adapter = adapter
+    }
+
+    private fun setupMapContainer() {
+        binding.locationSetView.setOnClickListener {
+            (activity as MainActivity).setFragment("home", MapFragment())
+        }
     }
 
 }
