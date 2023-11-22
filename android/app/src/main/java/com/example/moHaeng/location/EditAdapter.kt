@@ -25,17 +25,17 @@ class EditAdapter(private val locationList: List<LocationItem>) : RecyclerView.A
     inner class ViewHolder(private val binding: RecyclerviewLocationEditBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LocationItem) {
             binding.apply {
-                locationTitle.text = item.locationName
-                locationDetail.text = item.locationAddress
+                locationTitle.text = item.name
+                locationDetail.text = item.address
 
                 // primary가 false이면 nowTag를 안보이게 함
-                if (!item.primary) {
+                if (!item.isPrimary) {
                     nowTag.visibility = View.GONE
                 } else {
                     nowTag.visibility = View.VISIBLE
                 }
 
-                if (!item.primary) {
+                if (!item.isPrimary) {
                     deleteButton.visibility = View.VISIBLE
                 } else {
                     deleteButton.visibility = View.GONE

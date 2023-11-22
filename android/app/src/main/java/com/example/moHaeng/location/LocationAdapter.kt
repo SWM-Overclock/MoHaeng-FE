@@ -23,8 +23,12 @@ class LocationAdapter(private val locationList:List<LocationItem>) : RecyclerVie
     inner class ViewHolder(private val binding: RecyclerviewLocationListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LocationItem) {
             binding.apply {
-                locationTitle.text = item.locationName
-                locationDetail.text = item.locationAddress
+                locationTitle.text = item.name
+                locationDetail.text = item.address
+            }
+
+            if (item.isPrimary) {
+                binding.checkIcon.visibility = ViewGroup.VISIBLE
             }
         }
     }

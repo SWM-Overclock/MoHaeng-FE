@@ -1,8 +1,8 @@
 package com.example.moHaeng.location
 
 data class LocationItem(
-    val locationId: String,
-    val locationName: String,
-    val locationAddress: String,
-    val primary: Boolean
+    val id: String,
+    val name: String,
+    val address: String,
+    val isPrimary: Boolean
 )

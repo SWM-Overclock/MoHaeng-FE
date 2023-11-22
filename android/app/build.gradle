@@ -19,6 +19,7 @@ android {
         versionName "1.0"
 
         buildConfigField "String", "OAUTH_SERVER", properties['oauth_server']
+        buildConfigField "String", "SERVER_URL", properties['server_url']
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

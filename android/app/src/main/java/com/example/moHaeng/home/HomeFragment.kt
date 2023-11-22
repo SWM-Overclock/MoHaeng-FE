@@ -118,7 +118,7 @@ class HomeFragment : Fragment() {
     //locationContainer늘 누르면 locationFragment로 이동하는 함수
     private fun setupLocationContainer() {
         binding.locationContainer.setOnClickListener {
-            (activity as MainActivity).setFragment("location", EditLocationFragment())
+            (activity as MainActivity).setFragment("location", SetLocationFragment())
         }
     }
 

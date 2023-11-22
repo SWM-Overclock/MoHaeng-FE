@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
 import com.example.moHaeng.databinding.ActivityLocationBinding
+import com.example.moHaeng.maps.KakaoMapsFragment
 
 open class LocationPermissionActivity : AppCompatActivity() {
 
