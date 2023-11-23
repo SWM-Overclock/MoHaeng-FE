@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moHaeng.databinding.RecyclerviewLocationListBinding
 
-class LocationAdapter(private val locationList:List<LocationItem>) : RecyclerView.Adapter<LocationAdapter.ViewHolder>() {
+class LocationAdapter(private val locationList: MutableList<SetLocationFragment.LocationListResponseDto>) : RecyclerView.Adapter<LocationAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationAdapter.ViewHolder {
         val binding = RecyclerviewLocationListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
@@ -21,13 +21,13 @@ class LocationAdapter(private val locationList:List<LocationItem>) : RecyclerVie
     }
 
     inner class ViewHolder(private val binding: RecyclerviewLocationListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: LocationItem) {
+        fun bind(item: SetLocationFragment.LocationListResponseDto) {
             binding.apply {
                 locationTitle.text = item.name
                 locationDetail.text = item.address
             }
 
-            if (item.isPrimary) {
+            if (item.primary) {
                 binding.checkIcon.visibility = ViewGroup.VISIBLE
             }
         }

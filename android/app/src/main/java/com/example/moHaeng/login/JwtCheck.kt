@@ -3,6 +3,7 @@ package com.example.moHaeng.login
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import com.example.moHaeng.BuildConfig
 import com.example.moHaeng.MainActivity
 import retrofit2.Call
@@ -78,8 +79,8 @@ public class JwtCheck {
                     return response.body()?.accessToken
                 }
             } catch (e: Exception) {
-                // 예외 처리, 예를 들어 네트워크 문제
-                // Toast.makeText(context, "액세스 토큰 갱신에 실패했습니다", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "세션이 만료되었습니다", Toast.LENGTH_SHORT).show()
+                goToLoginActivity(context as Activity)
             }
 
             null

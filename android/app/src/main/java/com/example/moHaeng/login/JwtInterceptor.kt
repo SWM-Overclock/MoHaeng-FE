@@ -10,7 +10,7 @@ class JwtInterceptor(private val context: Context, private val apiEndpoint: Stri
         val currentAccessToken = JwtCheck().getAccessToken(context)
 
         val request = chain.request().newBuilder()
-            .header("Authorization", "Bearer $currentAccessToken")
+            .header("Authorization","Bearer $currentAccessToken")
             .build()
 
         val response = chain.proceed(request)
