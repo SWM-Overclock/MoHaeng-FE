@@ -42,15 +42,16 @@ class CategoryButtonFragment : Fragment() {
 
     private fun generateDummyCategoryData(): List<CategoryItem> {
         return listOf(
-            CategoryItem("카테고리1", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리2", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리3", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리4", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리5", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리6", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리7", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리8", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리9", R.drawable.ic_launcher_background),
+            CategoryItem("편의점", R.drawable.category_convi),
+            CategoryItem("카페", R.drawable.category_cafe),
+            CategoryItem("음식점", R.drawable.category_food),
+            CategoryItem("문화생활", R.drawable.category_culture),
+            CategoryItem("과자", R.drawable.category_snack),
+            CategoryItem("음료", R.drawable.category_drink),
+            CategoryItem("아이스크림", R.drawable.category_ice),
+            CategoryItem("즉석식품", R.drawable.category_instant),
+            CategoryItem("유제품", R.drawable.category_daily),
+            CategoryItem("전체보기", R.drawable.category_all)
         )
     }
 }

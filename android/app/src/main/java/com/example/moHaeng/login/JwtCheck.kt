@@ -88,7 +88,7 @@ public class JwtCheck {
     }
 
     interface JwtApi {
-        @POST("/auth/token-reissue") // 갱신 토큰 엔드포인트에 맞게 수정
+        @POST("auth/token-reissue") // 갱신 토큰 엔드포인트에 맞게 수정
         fun refreshToken(@Body token: RefreshAccessRequest): Call<JwtResponse>
     }
 

@@ -26,7 +26,7 @@ class CategoryAdapter(private val itemList: List<CategoryItem>) : RecyclerView.A
         fun bind(item: CategoryItem) {
             binding.apply {
                 categoryName.text = item.categoryName
-                categoryImage.setImageResource(R.drawable.ic_launcher_background)
+                categoryImage.setImageResource(item.categoryImageResId)
             }
         }
     }

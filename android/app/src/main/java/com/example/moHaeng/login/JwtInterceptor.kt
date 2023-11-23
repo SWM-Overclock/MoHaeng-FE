@@ -20,6 +20,7 @@ class JwtInterceptor(private val context: Context, private val apiEndpoint: Stri
             val newAccessToken = JwtCheck().refreshAccessToken(context)
             if (newAccessToken != null) {
                 // 새로운 액세스 토큰으로 다시 요청 보내기
+                JwtCheck().saveJwtToken(context, newAccessToken, JwtCheck().getRefreshToken(context)!!)
                 val newRequest = request.newBuilder()
                     .header("Authorization", "Bearer $newAccessToken")
                     .build()

@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moHaeng.BuildConfig
 import com.example.moHaeng.MainActivity
 import com.example.moHaeng.databinding.FragmentSetLocationBinding
 import com.example.moHaeng.login.JwtInterceptor
+import com.example.moHaeng.login.LoginActivity
 import com.example.moHaeng.maps.LocationPermissionUtils
 import com.example.moHaeng.maps.MapFragment
 import okhttp3.OkHttpClient
@@ -19,11 +21,13 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.PUT
 
 class SetLocationFragment : Fragment() {
 
     private lateinit var binding: FragmentSetLocationBinding
     private lateinit var apiService: ApiService
+    private val viewModel: LocationViewModel by activityViewModels()
 
     private val locationList = mutableListOf<LocationListResponseDto>()
 
@@ -41,6 +45,10 @@ class SetLocationFragment : Fragment() {
         setupMapContainer()
         getLocationList()
         setupEditButton()
+
+        viewModel.locationList.observe(viewLifecycleOwner) { locationList ->
+            updateLocationRecyclerView(locationList)
+        }
 
         return binding.root
     }
@@ -85,8 +93,17 @@ class SetLocationFragment : Fragment() {
         }
     }
 
+    private fun updateLocationRecyclerView(newLocationList: List<LocationListResponseDto>) {
+        // LocationAdapter에 데이터 변경을 알리기
+        (binding.locationListRecyclerView.adapter as LocationAdapter).apply {
+            locationList.clear()
+            locationList.addAll(newLocationList)
+            notifyDataSetChanged()
+        }
+    }
 
-    private fun getLocationList() {
+
+    fun getLocationList() {
         apiService.getLocationList().enqueue(object : retrofit2.Callback<List<LocationListResponseDto>> {
             override fun onResponse(call: Call<List<LocationListResponseDto>>, response: retrofit2.Response<List<LocationListResponseDto>>) {
                 if (response.isSuccessful) {
@@ -118,9 +135,19 @@ class SetLocationFragment : Fragment() {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    interface ApiService {
+    interface ApiService : LoginActivity.ApiService {
         @GET("location/list")
         fun getLocationList(): Call<List<LocationListResponseDto>>
+        override fun sendAccessTokenToServer(token: LoginActivity.AccessTokenRequest): Call<LoginActivity.LoginResponse> {
+            TODO("Not yet implemented")
+        }
+    }
+
+    interface ApiService2 : LoginActivity.ApiService {
+        // ... (기존 코드)
+
+        @PUT("location/primary/{locationId}")
+        fun setPrimaryLocation(@Path("locationId") locationId: Long): Call<Void>
     }
 
     object ApiClient {
@@ -141,6 +168,9 @@ class SetLocationFragment : Fragment() {
             return retrofit.create(ApiService::class.java)
         }
     }
+
+    // recyclerview가 clikc되면 서버로 해당 location의 id를 보내서 해당 location을 primary로 설정
+
 
     data class LocationListResponseDto(
         val id: Long,
