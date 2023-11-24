@@ -30,8 +30,8 @@ class SplashActivity : AppCompatActivity() {
         else {
             val jwtRefreshToken = JwtCheck().getRefreshToken(this)
             if (jwtRefreshToken != null) {
+                JwtCheck().refreshAccessToken(this)
                 JwtCheck().goToMainActivity(this)
-                //todo 서버로 jwtRefreshToken을 보내서 jwtAccessToken을 받아온다.
             }
             else {
                 JwtCheck().goToLoginActivity(this)

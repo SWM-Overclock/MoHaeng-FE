@@ -2,6 +2,7 @@ package com.example.moHaeng.home
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,9 @@ import com.example.moHaeng.productSearch.ProductItem
 import com.example.moHaeng.R
 import com.example.moHaeng.productSearch.RankingAdapter
 import com.example.moHaeng.databinding.FragmentHomeBinding
+import com.example.moHaeng.location.EditLocationFragment
+import com.example.moHaeng.location.SetLocationFragment
+import com.example.moHaeng.login.JwtCheck
 import com.example.moHaeng.productSearch.ProductRankingFragment
 
 class HomeFragment : Fragment() {
@@ -34,9 +38,12 @@ class HomeFragment : Fragment() {
         setupCategoryRecyclerView()
         setupCategoryButtonFragment()
         setupRankingRecyclerView()
+        setupLocationContainer()
 
         return binding.root
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -84,21 +91,16 @@ class HomeFragment : Fragment() {
 
     private fun generateDummyCategoryData(): List<CategoryItem> {
         return listOf(
-            CategoryItem("카테고리1", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리2", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리3", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리4", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리5", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리6", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리7", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리8", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리9", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리0", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리6", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리7", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리8", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리9", R.drawable.ic_launcher_background),
-            CategoryItem("카테고리0", R.drawable.ic_launcher_background)
+            CategoryItem("편의점", R.drawable.category_convi),
+            CategoryItem("카페", R.drawable.category_cafe),
+            CategoryItem("음식점", R.drawable.category_food),
+            CategoryItem("문화생활", R.drawable.category_culture),
+            CategoryItem("과자", R.drawable.category_snack),
+            CategoryItem("음료", R.drawable.category_drink),
+            CategoryItem("아이스크림", R.drawable.category_ice),
+            CategoryItem("즉석식품", R.drawable.category_instant),
+            CategoryItem("유제품", R.drawable.category_daily),
+            CategoryItem("전체보기", R.drawable.category_all)
         )
     }
 
@@ -111,6 +113,14 @@ class HomeFragment : Fragment() {
             ProductItem("상점2", "상품2", "5%", "10,000", "9,500", true, "2")
         )
     }
+
+    //locationContainer늘 누르면 locationFragment로 이동하는 함수
+    private fun setupLocationContainer() {
+        binding.locationContainer.setOnClickListener {
+            (activity as MainActivity).setFragment("location", SetLocationFragment())
+        }
+    }
+
 }
 
 

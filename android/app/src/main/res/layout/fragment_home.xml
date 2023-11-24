@@ -9,7 +9,7 @@
     android:background="@color/white"
     tools:context=".home.HomeFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -20,16 +20,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageButton
-            android:id="@+id/backButton"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/locationContainer"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/PinkRed"
-            android:scaleType="fitCenter"
-            android:src="@drawable/back_button"
-            android:visibility="visible" />
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <TextView
+                android:id="@+id/locationName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="우리집"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/pretendard_semibold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+            </TextView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/white_down_button"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/locationName"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+            </ImageView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/alarmButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/alarm_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ImageView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
@@ -160,7 +191,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp">
+                    android:layout_marginRight="12dp"
+
+                    >
 
                 </FrameLayout>
 
