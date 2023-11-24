@@ -1,5 +1,6 @@
 package com.example.moHaeng.home
 
+import android.content.Context
 import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
@@ -40,6 +41,7 @@ class HomeFragment : Fragment() {
         setupRankingRecyclerView()
         setupLocationContainer()
         setupEventCardViewPager()
+        setLocationName()
 
         return binding.root
     }
@@ -56,6 +58,16 @@ class HomeFragment : Fragment() {
     //rankingFindMoreButton버튼을 누르면 지금 homeFragment가 있는 activity의 fragment를 변경
     private fun setupRankingFindMoreButton() {
         (activity as MainActivity).setFragment("productRanking", ProductRankingFragment())
+    }
+
+    private fun setLocationName() {
+        var locationName = getLocationName(requireContext())
+        binding.locationName.text = locationName
+    }
+
+    fun getLocationName(context: Context): String? {
+        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("primaryLocation", "등록이 필요합니다")
     }
 
     private fun setupEventCardViewPager() {
