@@ -64,7 +64,7 @@ class SetLocationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.backButton.setOnClickListener {
-            (activity as MainActivity).onBackPressed()
+            (activity as MainActivity).setFragment("home", HomeFragment())
         }
     }
 

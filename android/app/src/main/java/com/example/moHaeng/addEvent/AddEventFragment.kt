@@ -13,13 +13,6 @@ import java.util.Calendar
 
 class AddEventFragment : Fragment() {
     private lateinit var binding: FragmentAddItemBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding.backButton.setOnClickListener {
-            (activity as MainActivity).onBackPressed()
-        }
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,13 +25,14 @@ class AddEventFragment : Fragment() {
         return binding.root
     }
 
-    //onbackpressed로 뒤로가기 버튼 눌렀을 때의 이벤트 처리
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        binding.backButton.setOnClickListener {
-//            (activity as MainActivity).replaceFragment(HomeFragment())
-//        }
-//    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.backButton.setOnClickListener {
+            (activity as MainActivity).onBackPressed()
+        }
+
+    }
+
 
     private fun showDatePickerDialog(listener: DatePickerDialog.OnDateSetListener) {
         val calendar = Calendar.getInstance()
