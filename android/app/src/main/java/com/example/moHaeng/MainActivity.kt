@@ -57,6 +57,8 @@ class MainActivity : AppCompatActivity() {
 
         // 백 스택에 현재 Fragment 추가
         fragTransaction.replace(R.id.mainFragment, fragment, tag)
+        //navigationView의 아이템 선택을 해제
+
         //백 스택에 이미 존재하는 Fragment가 아닌 경우에만 추가
         if (!manager.popBackStackImmediate(tag, 0)) {
             fragTransaction.addToBackStack(tag)
@@ -69,6 +71,13 @@ class MainActivity : AppCompatActivity() {
         val manager: FragmentManager = supportFragmentManager
         if (manager.backStackEntryCount > 0) {
             manager.popBackStack()
+
+            when (manager.findFragmentById(R.id.mainFragment)) {
+                is HomeFragment -> binding.navigationView.menu.findItem(R.id.homeFragment).isChecked = true
+                is MapFragment -> binding.navigationView.menu.findItem(R.id.mapFragment).isChecked = true
+                is AddEventFragment -> binding.navigationView.menu.findItem(R.id.addFragment).isChecked = true
+                is MyPageFragment -> binding.navigationView.menu.findItem(R.id.myPageFragment).isChecked = true
+            }
         } else {
             if (System.currentTimeMillis() > backPressedTime + DOUBLE_BACK_PRESS_INTERVAL) {
                 backPressedTime = System.currentTimeMillis()

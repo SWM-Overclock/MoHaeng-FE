@@ -57,8 +57,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.alarmButton.setOnClickListener {
-            // 버튼이 클릭되었을 때 AlertDialog 띄우기
-            showAlertDialog()
+            (activity as MainActivity).setFragment("home", AlarmFragment())
         }
     }
 
