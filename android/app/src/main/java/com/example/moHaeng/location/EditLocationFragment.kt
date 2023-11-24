@@ -1,5 +1,6 @@
 package com.example.moHaeng.location
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -50,6 +51,15 @@ class EditLocationFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.backButton.setOnClickListener {
+            (activity as MainActivity).onBackPressed()
+        }
+    }
+
+
+
     private fun setEditLocationRecyclerView() {
         val recyclerView: RecyclerView = binding.locationListRecyclerView
         val layoutManager = LinearLayoutManager(activity)
@@ -57,12 +67,38 @@ class EditLocationFragment : Fragment() {
 
         val adapter = EditAdapter(locationList, object : EditAdapter.OnDeleteClickListener {
             override fun onDeleteClick(locationId: Long) {
-                // 삭제 이벤트 처리
-                deleteLocation(locationId)
+                showAlertDialog(locationId)
+
             }
         })
         adapter.locationList.sortByDescending { it.isPrimary }
         recyclerView.adapter = adapter
+    }
+
+    private fun showAlertDialog(locationId: Long) {
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
+
+        alertDialogBuilder.setTitle("알림")
+        alertDialogBuilder.setMessage("정말 삭제하시겠습니까?")
+
+        alertDialogBuilder.setPositiveButton("확인") { dialog, _ ->
+            deleteLocation(locationId)
+            showToast("삭제되었습니다")
+            dialog.dismiss()
+        }
+
+        alertDialogBuilder.setNegativeButton("취소") { dialog, _ ->
+            // 사용자가 취소 버튼을 눌렀을 때의 동작
+            dialog.dismiss()
+        }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+    }
+
+    private fun showToast(message: String) {
+        // Toast 메시지 생성 및 표시
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun setupMapContainer() {
@@ -120,7 +156,7 @@ class EditLocationFragment : Fragment() {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    fun deleteLocation(locationId: Long) {
+    private fun deleteLocation(locationId: Long) {
         Log.e("locationId", locationId.toString())
         apiService.deleteLocation(locationId).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {

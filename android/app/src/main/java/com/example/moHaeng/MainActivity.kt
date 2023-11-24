@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager
 import com.example.moHaeng.addEvent.AddEventFragment
 import com.example.moHaeng.databinding.ActivityMainBinding
 import com.example.moHaeng.home.HomeFragment
-import com.example.moHaeng.maps.FindMapFragment
+import com.example.moHaeng.maps.MapFragment
 import com.example.moHaeng.userPage.MyPageFragment
 
 private const val TAG_HOME = "home"
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         binding.navigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.homeFragment -> setFragment(TAG_HOME, HomeFragment())
-                R.id.mapFragment -> setFragment(TAG_MAP, FindMapFragment())
+                R.id.mapFragment -> setFragment(TAG_MAP, MapFragment())
                 R.id.addFragment -> setFragment(TAG_ADD_ITEM, AddEventFragment())
                 R.id.myPageFragment -> setFragment(TAG_MY_PAGE, MyPageFragment())
             }

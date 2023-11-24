@@ -52,6 +52,13 @@ class AddDetailLocationFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding.backButton.setOnClickListener {
+            (activity as MainActivity).onBackPressed()
+        }
+    }
+
     private fun sendDataToServer() {
         val apiService = ApiClient.createApiService(requireContext(), "create")
 

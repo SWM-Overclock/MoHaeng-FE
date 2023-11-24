@@ -61,6 +61,13 @@ class SetLocationFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.backButton.setOnClickListener {
+            (activity as MainActivity).onBackPressed()
+        }
+    }
+
     private fun setSetLocationRecyclerView() {
         val recyclerView = binding.locationListRecyclerView
         val layoutManager = LinearLayoutManager(activity)

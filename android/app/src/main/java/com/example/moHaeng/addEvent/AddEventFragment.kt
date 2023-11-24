@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.moHaeng.MainActivity
 import com.example.moHaeng.databinding.FragmentAddItemBinding
 import java.util.Calendar
 
@@ -14,6 +15,9 @@ class AddEventFragment : Fragment() {
     private lateinit var binding: FragmentAddItemBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.backButton.setOnClickListener {
+            (activity as MainActivity).onBackPressed()
+        }
 
     }
 

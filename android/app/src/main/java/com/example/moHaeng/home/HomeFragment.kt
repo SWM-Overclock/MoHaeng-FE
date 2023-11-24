@@ -118,11 +118,11 @@ class HomeFragment : Fragment() {
             eventCardViewPager.setCurrentItem(if (currentItem + 1 < totalItems) currentItem + 1 else 0, true)
 
             // 10초 후에 다시 호출
-            autoScrollHandler.postDelayed(autoScrollRunnable, 10000)
+            autoScrollHandler.postDelayed(autoScrollRunnable, 5000)
         }
 
         // 최초 실행
-        autoScrollHandler.postDelayed(autoScrollRunnable, 10000)
+        autoScrollHandler.postDelayed(autoScrollRunnable, 5000)
 
         // ViewPager의 터치 이벤트가 발생하면 자동 스크롤을 중지
         eventCardViewPager.setOnTouchListener { _, _ ->

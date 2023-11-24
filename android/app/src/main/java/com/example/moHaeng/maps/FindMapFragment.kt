@@ -40,6 +40,13 @@ class FindMapFragment : Fragment(), KakaoMapsFragment.OnLocationSelectedListener
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.backButton.setOnClickListener {
+            (activity as MainActivity).onBackPressed()
+        }
+    }
+
     // map_container에 KakaoMapsFragment 추가
     private fun setupMapContainer() {
         kakaoMapsFragment = KakaoMapsFragment()
