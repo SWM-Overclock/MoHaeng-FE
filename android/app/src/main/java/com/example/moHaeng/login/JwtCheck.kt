@@ -42,6 +42,8 @@ public class JwtCheck {
     fun saveJwtToken(context: Context, accessToken: String, refreshToken: String) {
         val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
+        //토큰 초기화
+        editor.clear()
         editor.putString("refreshToken", refreshToken)
         editor.putString("accessToken", accessToken)
         editor.apply()

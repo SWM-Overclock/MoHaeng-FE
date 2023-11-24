@@ -63,21 +63,15 @@ class AddDetailLocationFragment : Fragment() {
             override fun onResponse(call: Call<LocationCreateResponseDto>, response: retrofit2.Response<LocationCreateResponseDto>) {
                 if (response.isSuccessful) {
                     // 등록 성공
-                    LocationCallback.onLocationCreatedSuccess()
-                    // 서버에서 받은 데이터 활용 가능: response.body()
-                    showMessage("Location created successfully.")
+                    showMessage("위치 등록이 완료되었습니다!")
                 } else {
-                    // 등록 실패
-                    val errorMessage = response.errorBody()?.string()
-                    LocationCallback.onLocationCreateFailure(errorMessage ?: "Unknown error")
-                    showMessage("Failed to create location.")
+                    showMessage("등록에 실패하였습니다. 다시 시도해주세요")
                 }
             }
 
             override fun onFailure(call: Call<LocationCreateResponseDto>, t: Throwable) {
                 // 통신 실패
-                LocationCallback.onLocationCreateFailure(t.message ?: "Network error")
-                showMessage("Network error.")
+                showMessage("다시 시도해주세요")
                 Log.e("API Error", "API request failed", t)
             }
         })
@@ -128,17 +122,6 @@ class AddDetailLocationFragment : Fragment() {
 
             return retrofit.create(ApiService::class.java)
         }
-    }
-
-    // 서버 응답 처리를 위한 콜백 인터페이스
-    object LocationCallback {
-        fun onLocationCreatedSuccess(){
-            Log.e("LocationCallback", "onLocationCreatedSuccess")
-        }
-        fun onLocationCreateFailure(message: String){
-            Log.e("LocationCallback", "onLocationCreateFailure: $message")
-        }
-
     }
 
     // 서버 API 정의 인터페이스

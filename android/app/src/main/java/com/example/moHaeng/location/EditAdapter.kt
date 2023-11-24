@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moHaeng.databinding.RecyclerviewLocationEditBinding
 
 class EditAdapter(
-    private val locationList: MutableList<SetLocationFragment.LocationListResponseDto>,
+    val locationList: MutableList<SetLocationFragment.LocationListResponseDto>,
     private val onDeleteClickListener: OnDeleteClickListener
 ) : RecyclerView.Adapter<EditAdapter.ViewHolder>() {
 
@@ -37,13 +37,13 @@ class EditAdapter(
                 locationDetail.text = item.address
 
                 // primary가 false이면 nowTag를 안보이게 함
-                if (!item.primary) {
+                if (!item.isPrimary) {
                     nowTag.visibility = View.GONE
                 } else {
                     nowTag.visibility = View.VISIBLE
                 }
 
-                if (!item.primary) {
+                if (!item.isPrimary) {
                     deleteButton.visibility = View.VISIBLE
                 } else {
                     deleteButton.visibility = View.GONE

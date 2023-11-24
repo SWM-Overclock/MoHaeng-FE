@@ -29,7 +29,7 @@
                 android:id="@+id/locationName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="바보바보"
+                android:text="우리집"
                 android:textSize="20sp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/pretendard_semibold"

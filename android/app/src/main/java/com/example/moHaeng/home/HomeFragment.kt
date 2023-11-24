@@ -2,6 +2,7 @@ package com.example.moHaeng.home
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ import com.example.moHaeng.productSearch.RankingAdapter
 import com.example.moHaeng.databinding.FragmentHomeBinding
 import com.example.moHaeng.location.EditLocationFragment
 import com.example.moHaeng.location.SetLocationFragment
+import com.example.moHaeng.login.JwtCheck
 import com.example.moHaeng.productSearch.ProductRankingFragment
 
 class HomeFragment : Fragment() {
@@ -40,6 +42,8 @@ class HomeFragment : Fragment() {
 
         return binding.root
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

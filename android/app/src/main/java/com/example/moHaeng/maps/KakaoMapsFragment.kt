@@ -4,6 +4,8 @@ import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +30,9 @@ class KakaoMapsFragment : Fragment() {
     private lateinit var currentMarker: MapPOIItem
     private var locationSelectedListener: OnLocationSelectedListener? = null
 
+    private val handler = Handler(Looper.getMainLooper())
+    private val updateInterval = 500 // 업데이트 간격 (1초)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,10 +50,32 @@ class KakaoMapsFragment : Fragment() {
         addCurrentLocationMarker()
 
         // 지도 이동 이벤트 리스너 등록
-        mapView.setMapViewEventListener(MapViewEventListener())
+        //
+//        mapView.setMapViewEventListener(MapViewEventListener())
+
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                updateMarker()
+                handler.postDelayed(this, updateInterval.toLong())
+            }
+        }, updateInterval.toLong())
 
         return binding.root
     }
+
+    private fun updateMarker() {
+        // 현재 지도 중심 위치 가져오기
+        val mapCenter = mapView.mapCenterPoint.mapPointGeoCoord
+
+        // 마커 업데이트
+        currentMarker.mapPoint = MapPoint.mapPointWithGeoCoord(mapCenter.latitude, mapCenter.longitude)
+        mapView.removePOIItem(currentMarker)
+        mapView.addPOIItem(currentMarker)
+
+        // 주소 정보 업데이트
+        getCurrentAddress(mapView.mapCenterPoint)
+    }
+
 
     private fun addCurrentLocationMarker() {
         // 위치 권한 확인
@@ -129,9 +156,6 @@ class KakaoMapsFragment : Fragment() {
         override fun onMapViewMoveFinished(p0: MapView?, p1: MapPoint?) {}
     }
 
-    fun setOnLocationSelectedListener(listener: OnLocationSelectedListener) {
-        locationSelectedListener = listener
-    }
 
     // 현재 위치 전달 메서드
     private fun sendCurrentLocation(latitude: Double, longitude: Double, address: String) {

@@ -17,7 +17,7 @@ import com.example.moHaeng.login.JwtInterceptor
 import com.example.moHaeng.maps.LocationPermissionUtils.checkLocationPermission
 import com.example.moHaeng.maps.LocationPermissionUtils.isLocationServiceEnabled
 import com.example.moHaeng.maps.LocationPermissionUtils.requestLocationPermission
-import com.example.moHaeng.maps.MapFragment
+import com.example.moHaeng.maps.FindMapFragment
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,9 +25,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Path
 
 class EditLocationFragment : Fragment() {
@@ -45,7 +42,7 @@ class EditLocationFragment : Fragment() {
         locationList = mutableListOf()
 
         apiService = ApiClient.createApiService(requireContext())
-8
+
         setEditLocationRecyclerView()
         setupMapContainer()
         getLocationList()
@@ -64,6 +61,7 @@ class EditLocationFragment : Fragment() {
                 deleteLocation(locationId)
             }
         })
+        adapter.locationList.sortByDescending { it.isPrimary }
         recyclerView.adapter = adapter
     }
 
@@ -74,7 +72,7 @@ class EditLocationFragment : Fragment() {
                 // 위치 권한이 있는 경우
                 if (isLocationServiceEnabled(requireContext())) {
                     // 위치 서비스가 활성화된 경우, 지도 설정
-                    (activity as MainActivity).setFragment("home", MapFragment())
+                    (activity as MainActivity).setFragment("home", FindMapFragment())
                 } else {
                     // 위치 서비스가 비활성화된 경우, 사용자에게 메시지 표시
                     Toast.makeText(requireContext(), "위치 서비스가 비활성화되어 있습니다.", Toast.LENGTH_SHORT).show()
@@ -93,17 +91,17 @@ class EditLocationFragment : Fragment() {
     private fun getLocationList() {
         // 서버에서 데이터를 가져오는 API 호출
         SetLocationFragment.ApiClient.createApiService(requireContext())
-            .getLocationList().enqueue(object : retrofit2.Callback<List<SetLocationFragment.LocationListResponseDto>> {
+            .getLocationList().enqueue(object : Callback<List<SetLocationFragment.LocationListResponseDto>> {
                 override fun onResponse(
-                    call: retrofit2.Call<List<SetLocationFragment.LocationListResponseDto>>,
-                    response: retrofit2.Response<List<SetLocationFragment.LocationListResponseDto>>
+                    call: Call<List<SetLocationFragment.LocationListResponseDto>>,
+                    response: Response<List<SetLocationFragment.LocationListResponseDto>>
                 ) {
                     if (response.isSuccessful) {
                         val newLocationList = response.body()
                         if (newLocationList != null) {
                             locationList.clear()
                             locationList.addAll(newLocationList)
-                            // Adapter에 데이터 변경을 알리기
+                            // Adapter 데이터 변경을 알리기
                             (binding.locationListRecyclerView.adapter as EditAdapter).notifyDataSetChanged()
                         }
                     } else {
@@ -112,7 +110,7 @@ class EditLocationFragment : Fragment() {
                     }
                 }
 
-                override fun onFailure(call: retrofit2.Call<List<SetLocationFragment.LocationListResponseDto>>, t: Throwable) {
+                override fun onFailure(call: Call<List<SetLocationFragment.LocationListResponseDto>>, t: Throwable) {
                     showMessage(t.message ?: "Network error")
                 }
             })
@@ -129,6 +127,7 @@ class EditLocationFragment : Fragment() {
                 if (response.isSuccessful) {
                     // 성공적으로 업데이트된 경우
                     showMessage("삭제 완료되었습니다.")
+                    getLocationList()
                     // 적절한 처리 수행
                 } else {
                     // 서버 응답이 실패한 경우
@@ -156,7 +155,7 @@ class EditLocationFragment : Fragment() {
     object ApiClient {
         private const val BASE_URL = "${BuildConfig.SERVER_URL}"
 
-        fun createApiService(context: Context): EditLocationFragment.ApiService {
+        fun createApiService(context: Context): ApiService {
             val interceptor = JwtInterceptor(context, "location/{locationId}")
             val client: OkHttpClient = OkHttpClient.Builder()
                 .addInterceptor(interceptor)
@@ -168,7 +167,7 @@ class EditLocationFragment : Fragment() {
                 .client(client)
                 .build()
 
-            return retrofit.create(EditLocationFragment.ApiService::class.java)
+            return retrofit.create(ApiService::class.java)
         }
     }
 }
