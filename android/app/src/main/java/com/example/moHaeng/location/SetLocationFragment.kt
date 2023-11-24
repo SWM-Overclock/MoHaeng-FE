@@ -59,9 +59,9 @@ class SetLocationFragment : Fragment() {
         return binding.root
     }
 
-    private fun onLocationItemClick(locationId: Long) {
-
+    private fun onLocationItemClick(locationId: Long, locationName: String) {
         setPrimaryLocation(locationId)
+        savePrimaryLocation(requireContext(), locationName)
     }
     private fun setSetLocationRecyclerView() {
         val recyclerView = binding.locationListRecyclerView
@@ -69,7 +69,7 @@ class SetLocationFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
 
         val adapter = LocationAdapter(locationList) { locationId ->
-            onLocationItemClick(locationId)
+            onLocationItemClick(locationId, locationList.find { it.id == locationId }!!.name)
         }
 
         adapter.locationList.sortByDescending { it.isPrimary }
@@ -153,9 +153,6 @@ class SetLocationFragment : Fragment() {
     interface ApiService : LoginActivity.ApiService {
         @GET("location/list")
         fun getLocationList(): Call<List<LocationListResponseDto>>
-        override fun sendAccessTokenToServer(token: LoginActivity.AccessTokenRequest): Call<LoginActivity.LoginResponse> {
-            TODO("Not yet implemented")
-        }
     }
 
     interface ApiService2 : LoginActivity.ApiService {
@@ -166,14 +163,21 @@ class SetLocationFragment : Fragment() {
         ): Call<Void>
     }
 
-    fun setPrimaryLocation(locationId: Long) {
-        Log.e("locationId", locationId.toString())
+    fun savePrimaryLocation(context: Context, primaryLocation: String) {
+        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("primaryLocation", primaryLocation)
+        editor.apply()
+    }
+
+    private fun setPrimaryLocation(locationId: Long) {
         apiService2.setPrimaryLocation(locationId).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
                     // 성공적으로 업데이트된 경우
                     showMessage("현재 주소 설정이 완료되었습니다.")
                     getLocationList()
+
                     // 적절한 처리 수행
                 } else {
                     // 서버 응답이 실패한 경우

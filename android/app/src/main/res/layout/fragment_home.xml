@@ -89,14 +89,14 @@
 
             </androidx.appcompat.widget.SearchView>
 
-            <LinearLayout
-                android:id="@+id/eventCard"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/eventCard_viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="148dp"
                 android:background="@color/PinkRed"
                 android:orientation="horizontal">
 
-            </LinearLayout>
+            </androidx.viewpager2.widget.ViewPager2>
 
             <LinearLayout
                 android:id="@+id/categoryLayer"
