@@ -1,5 +1,6 @@
 package com.example.moHaeng.home
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Resources
 import android.os.Bundle
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -53,6 +55,32 @@ class HomeFragment : Fragment() {
         binding.rankingFindMoreButton.setOnClickListener {
             setupRankingFindMoreButton()
         }
+
+        binding.alarmButton.setOnClickListener {
+            (activity as MainActivity).setFragment("home", AlarmFragment())
+        }
+    }
+
+    private fun showAlertDialog() {
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
+
+        alertDialogBuilder.setTitle("알림")
+        alertDialogBuilder.setMessage("알람을 설정하시겠습니까?")
+
+        alertDialogBuilder.setPositiveButton("확인") { dialog, _ ->
+            // 사용자가 확인 버튼을 눌렀을 때의 동작
+            showToast("알람이 설정되었습니다.")
+            dialog.dismiss()
+        }
+
+        alertDialogBuilder.setNegativeButton("취소") { dialog, _ ->
+            // 사용자가 취소 버튼을 눌렀을 때의 동작
+            showToast("알람 설정이 취소되었습니다.")
+            dialog.dismiss()
+        }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
     //rankingFindMoreButton버튼을 누르면 지금 homeFragment가 있는 activity의 fragment를 변경
@@ -60,12 +88,17 @@ class HomeFragment : Fragment() {
         (activity as MainActivity).setFragment("productRanking", ProductRankingFragment())
     }
 
+    fun showToast(message: String) {
+        // Toast 메시지 생성 및 표시
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
     private fun setLocationName() {
         var locationName = getLocationName(requireContext())
         binding.locationName.text = locationName
     }
 
-    fun getLocationName(context: Context): String? {
+    private fun getLocationName(context: Context): String? {
         val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
         return sharedPreferences.getString("primaryLocation", "등록이 필요합니다")
     }
@@ -84,11 +117,11 @@ class HomeFragment : Fragment() {
             eventCardViewPager.setCurrentItem(if (currentItem + 1 < totalItems) currentItem + 1 else 0, true)
 
             // 10초 후에 다시 호출
-            autoScrollHandler.postDelayed(autoScrollRunnable, 10000)
+            autoScrollHandler.postDelayed(autoScrollRunnable, 5000)
         }
 
         // 최초 실행
-        autoScrollHandler.postDelayed(autoScrollRunnable, 10000)
+        autoScrollHandler.postDelayed(autoScrollRunnable, 5000)
 
         // ViewPager의 터치 이벤트가 발생하면 자동 스크롤을 중지
         eventCardViewPager.setOnTouchListener { _, _ ->

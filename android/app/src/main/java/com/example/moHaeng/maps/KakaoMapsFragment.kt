@@ -33,6 +33,12 @@ class KakaoMapsFragment : Fragment() {
     private val handler = Handler(Looper.getMainLooper())
     private val updateInterval = 500 // 업데이트 간격 (1초)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // 현재 위치 전달 리스너 초기화
+        mapView = MapView(requireContext())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,7 +46,6 @@ class KakaoMapsFragment : Fragment() {
     ): View? {
         binding = FragmentKakaoMapsBinding.inflate(inflater, container, false)
 
-        mapView = MapView(requireContext())
         binding.rootLayout.addView(mapView)
 
         // FusedLocationProviderClient 초기화
@@ -61,6 +66,12 @@ class KakaoMapsFragment : Fragment() {
         }, updateInterval.toLong())
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // View가 소멸될 때 MapView 제거
+        binding.rootLayout.removeView(mapView)
     }
 
     private fun updateMarker() {
@@ -172,31 +183,43 @@ class KakaoMapsFragment : Fragment() {
     }
 
     fun getCurrentAddress(currentMapPoint: MapPoint) {
-        val reverseGeoCoder = MapReverseGeoCoder(
-            BuildConfig.KAKAO_APP_KEY,
-            currentMapPoint,
-            object : MapReverseGeoCoder.ReverseGeoCodingResultListener {
-                override fun onReverseGeoCoderFailedToFindAddress(p0: MapReverseGeoCoder?) {
-                    //현재 위도, 경도와 주소를 알수없음으로 처리
-                    sendCurrentLocation(
-                        currentMapPoint.mapPointGeoCoord.latitude,
-                        currentMapPoint.mapPointGeoCoord.longitude,
-                        "알 수 없음"
-                    )
-                }
+        val activity = activity
 
-                override fun onReverseGeoCoderFoundAddress(p0: MapReverseGeoCoder?, p1: String?) {
-                    // 주소를 성공적으로 찾은 경우의 처리
-                    p1?.let {
+        if (activity != null) {
+            val reverseGeoCoder = MapReverseGeoCoder(
+                BuildConfig.KAKAO_APP_KEY,
+                currentMapPoint,
+                object : MapReverseGeoCoder.ReverseGeoCodingResultListener {
+                    override fun onReverseGeoCoderFailedToFindAddress(p0: MapReverseGeoCoder?) {
+                        // 현재 위도, 경도와 주소를 알 수 없음으로 처리
                         sendCurrentLocation(
                             currentMapPoint.mapPointGeoCoord.latitude,
                             currentMapPoint.mapPointGeoCoord.longitude,
-                            it
+                            "알 수 없음"
                         )
                     }
-                }
-            }, requireContext() as Activity?
-        )
-        reverseGeoCoder.startFindingAddress()
+
+                    override fun onReverseGeoCoderFoundAddress(p0: MapReverseGeoCoder?, p1: String?) {
+                        // 주소를 성공적으로 찾은 경우의 처리
+                        p1?.let {
+                            sendCurrentLocation(
+                                currentMapPoint.mapPointGeoCoord.latitude,
+                                currentMapPoint.mapPointGeoCoord.longitude,
+                                it
+                            )
+                        }
+                    }
+                }, activity
+            )
+            reverseGeoCoder.startFindingAddress()
+        } else {
+            // 현재 위도, 경도와 주소를 알 수 없음으로 처리
+            sendCurrentLocation(
+                currentMapPoint.mapPointGeoCoord.latitude,
+                currentMapPoint.mapPointGeoCoord.longitude,
+                "알 수 없음"
+            )
+        }
     }
+
 }

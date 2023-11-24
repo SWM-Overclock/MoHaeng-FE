@@ -26,4 +26,6 @@ class MapFragment : Fragment() {
 
             return binding.root
     }
+
+
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moHaeng.CategoryButtonFragment
+import com.example.moHaeng.MainActivity
 import com.example.moHaeng.R
 import com.example.moHaeng.databinding.FragmentProductListBinding
 import com.example.moHaeng.sort.SortedFragment
@@ -30,6 +31,13 @@ class ProductListFragment : Fragment() {
         setupProductRecyclerView()
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.backButton.setOnClickListener {
+            (activity as MainActivity).onBackPressed()
+        }
     }
 
     private fun setupFragments() {
