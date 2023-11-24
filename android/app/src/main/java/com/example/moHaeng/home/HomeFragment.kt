@@ -2,7 +2,7 @@ package com.example.moHaeng.home
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,15 +18,15 @@ import com.example.moHaeng.productSearch.ProductItem
 import com.example.moHaeng.R
 import com.example.moHaeng.productSearch.RankingAdapter
 import com.example.moHaeng.databinding.FragmentHomeBinding
-import com.example.moHaeng.location.EditLocationFragment
 import com.example.moHaeng.location.SetLocationFragment
-import com.example.moHaeng.login.JwtCheck
 import com.example.moHaeng.productSearch.ProductRankingFragment
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val itemList: List<CategoryItem> = generateDummyCategoryData()
     private val productItemList: List<ProductItem> = generateDummyProductData()
+    private val autoScrollHandler = Handler()
+    private lateinit var autoScrollRunnable: Runnable
 
 
     override fun onCreateView(
@@ -39,6 +39,7 @@ class HomeFragment : Fragment() {
         setupCategoryButtonFragment()
         setupRankingRecyclerView()
         setupLocationContainer()
+        setupEventCardViewPager()
 
         return binding.root
     }
@@ -55,6 +56,33 @@ class HomeFragment : Fragment() {
     //rankingFindMoreButton버튼을 누르면 지금 homeFragment가 있는 activity의 fragment를 변경
     private fun setupRankingFindMoreButton() {
         (activity as MainActivity).setFragment("productRanking", ProductRankingFragment())
+    }
+
+    private fun setupEventCardViewPager() {
+        val adList = arrayListOf<Int>(R.drawable.event1, R.drawable.event2, R.drawable.event3)
+        val eventCardViewPager = binding.eventCardViewPager
+        val eventCardAdapter = AddViewPagerAdapter(adList)
+        eventCardViewPager.adapter = eventCardAdapter
+
+        autoScrollRunnable = Runnable {
+            val currentItem = eventCardViewPager.currentItem
+            val totalItems = eventCardAdapter.itemCount
+
+            // 다음 아이템으로 넘기기 (마지막 아이템이면 처음으로)
+            eventCardViewPager.setCurrentItem(if (currentItem + 1 < totalItems) currentItem + 1 else 0, true)
+
+            // 10초 후에 다시 호출
+            autoScrollHandler.postDelayed(autoScrollRunnable, 10000)
+        }
+
+        // 최초 실행
+        autoScrollHandler.postDelayed(autoScrollRunnable, 10000)
+
+        // ViewPager의 터치 이벤트가 발생하면 자동 스크롤을 중지
+        eventCardViewPager.setOnTouchListener { _, _ ->
+            autoScrollHandler.removeCallbacks(autoScrollRunnable)
+            false
+        }
     }
 
 
