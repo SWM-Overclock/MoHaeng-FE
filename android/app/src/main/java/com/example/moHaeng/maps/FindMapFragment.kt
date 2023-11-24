@@ -72,8 +72,7 @@ class FindMapFragment : Fragment(), KakaoMapsFragment.OnLocationSelectedListener
         val addDetailLocationFragment = AddDetailLocationFragment()
         addDetailLocationFragment.arguments = bundle
 
-        val transaction = (context as MainActivity).supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.mainFragment, addDetailLocationFragment).commit()
+        (activity as MainActivity).setFragment("home", addDetailLocationFragment)
 
     }
 
