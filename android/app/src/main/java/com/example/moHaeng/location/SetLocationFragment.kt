@@ -1,5 +1,6 @@
 package com.example.moHaeng.location
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moHaeng.BuildConfig
 import com.example.moHaeng.MainActivity
 import com.example.moHaeng.databinding.FragmentSetLocationBinding
+import com.example.moHaeng.home.HomeFragment
 import com.example.moHaeng.login.JwtInterceptor
 import com.example.moHaeng.login.LoginActivity
 import com.example.moHaeng.maps.LocationPermissionUtils
@@ -59,17 +61,13 @@ class SetLocationFragment : Fragment() {
         return binding.root
     }
 
-    private fun onLocationItemClick(locationId: Long, locationName: String) {
-        setPrimaryLocation(locationId)
-        savePrimaryLocation(requireContext(), locationName)
-    }
     private fun setSetLocationRecyclerView() {
         val recyclerView = binding.locationListRecyclerView
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
 
         val adapter = LocationAdapter(locationList) { locationId ->
-            onLocationItemClick(locationId, locationList.find { it.id == locationId }!!.name)
+            showAlertDialog(locationId, locationList.find { it.id == locationId }!!.name)
         }
 
         adapter.locationList.sortByDescending { it.isPrimary }
@@ -163,11 +161,38 @@ class SetLocationFragment : Fragment() {
         ): Call<Void>
     }
 
-    fun savePrimaryLocation(context: Context, primaryLocation: String) {
+    private fun savePrimaryLocation(context: Context, primaryLocation: String) {
         val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString("primaryLocation", primaryLocation)
         editor.apply()
+    }
+
+    private fun showAlertDialog(locationId: Long, locationName: String) {
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
+
+        alertDialogBuilder.setTitle("알림")
+        alertDialogBuilder.setMessage("검색 위치로 지정하시겠습니까?")
+
+        alertDialogBuilder.setPositiveButton("확인") { dialog, _ ->
+            setPrimaryLocation(locationId)
+            savePrimaryLocation(requireContext(), locationName)
+            showToast("선택 위치가 변경되었습니다.")
+            dialog.dismiss()
+        }
+
+        alertDialogBuilder.setNegativeButton("취소") { dialog, _ ->
+            // 사용자가 취소 버튼을 눌렀을 때의 동작
+            dialog.dismiss()
+        }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+    }
+
+    private fun showToast(message: String) {
+        // Toast 메시지 생성 및 표시
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun setPrimaryLocation(locationId: Long) {
