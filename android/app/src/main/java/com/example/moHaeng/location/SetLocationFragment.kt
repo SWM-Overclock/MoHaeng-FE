@@ -168,10 +168,12 @@ class SetLocationFragment : Fragment() {
         ): Call<Void>
     }
 
-    private fun savePrimaryLocation(context: Context, primaryLocation: String) {
+    private fun savePrimaryLocation(context: Context, primaryLocation: String, primaryId: Long) {
         val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString("primaryLocation", primaryLocation)
+        editor.putLong("primaryId", primaryId)
+
         editor.apply()
     }
 
@@ -183,7 +185,7 @@ class SetLocationFragment : Fragment() {
 
         alertDialogBuilder.setPositiveButton("확인") { dialog, _ ->
             setPrimaryLocation(locationId)
-            savePrimaryLocation(requireContext(), locationName)
+            savePrimaryLocation(requireContext(), locationName, locationId)
             showToast("선택 위치가 변경되었습니다.")
             dialog.dismiss()
         }

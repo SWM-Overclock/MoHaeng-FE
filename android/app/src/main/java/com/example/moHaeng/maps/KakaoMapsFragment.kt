@@ -31,7 +31,7 @@ class KakaoMapsFragment : Fragment() {
     private var locationSelectedListener: OnLocationSelectedListener? = null
 
     private val handler = Handler(Looper.getMainLooper())
-    private val updateInterval = 500 // 업데이트 간격 (1초)
+    private val updateInterval = 500 // 업데이트 간격 (0.5초)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,12 +66,6 @@ class KakaoMapsFragment : Fragment() {
         }, updateInterval.toLong())
 
         return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        // View가 소멸될 때 MapView 제거
-        binding.rootLayout.removeView(mapView)
     }
 
     private fun updateMarker() {
@@ -132,40 +126,7 @@ class KakaoMapsFragment : Fragment() {
         return marker
     }
 
-    inner class MapViewEventListener : MapView.MapViewEventListener {
-        override fun onMapViewInitialized(p0: MapView?) {}
 
-        override fun onMapViewCenterPointMoved(mapView: MapView?, mapPoint: MapPoint?) {
-            // 지도 중심 위치가 변경될 때마다 마커 위치 업데이트
-            mapPoint?.let {
-                currentMarker.mapPoint = it
-                mapView?.removePOIItem(currentMarker) // 마커 삭제
-                mapView?.addPOIItem(currentMarker) // 새로운 위치에 마커 추가
-                getCurrentAddress(it) // 주소 정보 가져오기
-
-                // 위치 정보 실시간 업데이트
-                sendCurrentLocation(
-                    it.mapPointGeoCoord.latitude,
-                    it.mapPointGeoCoord.longitude,
-                    "Dummy Address"
-                )
-            }
-        }
-
-        override fun onMapViewZoomLevelChanged(p0: MapView?, p1: Int) {}
-
-        override fun onMapViewSingleTapped(p0: MapView?, p1: MapPoint?) {}
-
-        override fun onMapViewDoubleTapped(p0: MapView?, p1: MapPoint?) {}
-
-        override fun onMapViewLongPressed(p0: MapView?, p1: MapPoint?) {}
-
-        override fun onMapViewDragStarted(p0: MapView?, p1: MapPoint?) {}
-
-        override fun onMapViewDragEnded(p0: MapView?, p1: MapPoint?) {}
-
-        override fun onMapViewMoveFinished(p0: MapView?, p1: MapPoint?) {}
-    }
 
 
     // 현재 위치 전달 메서드
@@ -182,7 +143,7 @@ class KakaoMapsFragment : Fragment() {
         fun onLocationSelected(latitude: Double, longitude: Double, address: String)
     }
 
-    fun getCurrentAddress(currentMapPoint: MapPoint) {
+    private fun getCurrentAddress(currentMapPoint: MapPoint) {
         val activity = activity
 
         if (activity != null) {

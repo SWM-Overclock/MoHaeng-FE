@@ -15,7 +15,7 @@ class JwtInterceptor(private val context: Context, private val apiEndpoint: Stri
 
         val response = chain.proceed(request)
 
-        if (response.code == 401) {
+        if (response.code == 500) {
             // 응답이 401 Unauthorized일 경우, 리프레시 토큰을 사용하여 새로운 액세스 토큰 발급 시도
             val newAccessToken = JwtCheck().refreshAccessToken(context)
             if (newAccessToken != null) {
